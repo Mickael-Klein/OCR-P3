@@ -13,7 +13,8 @@ public class MessageService {
   @Autowired
   private MessageRepository messageRepository;
 
-  public Message saveMessage(Message message) {
+  public Message saveMessage(Message message) { // Use interface instead
+    System.out.println(message);
     return messageRepository.save(message);
   }
 }

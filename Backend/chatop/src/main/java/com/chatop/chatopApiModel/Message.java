@@ -19,16 +19,17 @@ public class Message {
   private Long id;
 
   @Column(name = "rental_id")
-  private Long rentalId;
+  private Long rental_id;
 
   @Column(name = "user_id")
-  private Long userId;
+  private Long user_id;
 
+  @Column(name = "message")
   private String message;
 
   @Column(name = "created_at")
-  private LocalDateTime createdAt;
+  private LocalDateTime created_at;
 
   @Column(name = "updated_at")
-  private LocalDateTime updatedAt;
+  private LocalDateTime updated_at;
 }

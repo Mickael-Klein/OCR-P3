@@ -19,14 +19,19 @@ public class Rental {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @Column(name = "name")
   private String name;
 
+  @Column(name = "surface")
   private BigDecimal surface;
 
+  @Column(name = "price")
   private BigDecimal price;
 
+  @Column(name = "picture")
   private String picture;
 
+  @Column(name = "description")
   private String description;
 
   @Column(name = "owner_id")
