@@ -43,6 +43,10 @@ public class UserService {
     return userRepository.findByEmail(email);
   }
 
+  public Optional<DbUser> getUserById(Long id) {
+    return userRepository.findById(id);
+  }
+
   public Boolean isPasswordValid(String password, DbUser user) {
     return passwordEncoder.matches(password, user.getPassword());
   }

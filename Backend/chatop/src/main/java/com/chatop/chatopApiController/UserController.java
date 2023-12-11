@@ -5,12 +5,15 @@ import com.chatop.ReqResModel.Request.RegisterRequest;
 import com.chatop.chatopApiModel.DbUser;
 import com.chatop.chatopApiService.JWTService;
 import com.chatop.chatopApiService.UserService;
+import com.nimbusds.jose.shaded.gson.JsonObject;
 import jakarta.validation.Valid;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +28,10 @@ public class UserController {
 
   @Autowired
   private JWTService jwtService;
+
+  public UserController(JWTService jwtService) {
+    this.jwtService = jwtService;
+  }
 
   @PostMapping("/register")
   public ResponseEntity<Object> registerAccount(
@@ -50,9 +57,12 @@ public class UserController {
 
       DbUser user = userService.saveUser(request);
 
-      String jwtToken = jwtService.generateToken(/* TODO */);
+      String jwtToken = jwtService.generateToken(user.getId());
 
-      return ResponseEntity.ok().body("{'token' : " + jwtToken + "}");
+      JsonObject jsonResponse = new JsonObject();
+      jsonResponse.addProperty("token", jwtToken);
+
+      return ResponseEntity.ok().body(jsonResponse.toString());
     } catch (Exception e) {
       return ResponseEntity
         .badRequest()
@@ -94,11 +104,32 @@ public class UserController {
           .body("{'message' : 'Bad credentials for login'}");
       }
 
-      String jwtToken = jwtService.generateToken(/* TODO */);
+      String jwtToken = jwtService.generateToken(user.getId());
 
-      return ResponseEntity.ok().body("{'token' : " + jwtToken + "}");
+      JsonObject jsonResponse = new JsonObject();
+      jsonResponse.addProperty("token", jwtToken);
+
+      return ResponseEntity.ok().body(jsonResponse.toString());
     } catch (Exception e) {
       return ResponseEntity.badRequest().body("{'message' : 'Error on Login'}");
+    }
+  }
+
+  @GetMapping("/me")
+  public ResponseEntity<Object> getMe(@AuthenticationPrincipal Jwt jwt) {
+    try {
+      String userId = jwt.getSubject();
+      Optional<DbUser> optionalUser = userService.getUserById(
+        Long.parseLong(userId)
+      );
+      if (!optionalUser.isPresent()) {
+        return ResponseEntity.badRequest().body("{'message' : 'invalid jwt'}");
+      }
+      DbUser user = optionalUser.get();
+
+      return ResponseEntity.ok().body(user);
+    } catch (Exception e) {
+      return ResponseEntity.badRequest().body("{'message' : 'invalid jwt'}");
     }
   }
 }
