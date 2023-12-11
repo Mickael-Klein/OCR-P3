@@ -2,11 +2,14 @@ package com.chatop.chatopApiController;
 
 import com.chatop.ReqResModel.Request.LoginRequest;
 import com.chatop.ReqResModel.Request.RegisterRequest;
+import com.chatop.chatopApiDTO.UserDTO;
 import com.chatop.chatopApiModel.DbUser;
 import com.chatop.chatopApiService.JWTService;
 import com.chatop.chatopApiService.UserService;
-import com.nimbusds.jose.shaded.gson.JsonObject;
+import com.chatop.utils.DateConverterService;
 import jakarta.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +31,9 @@ public class UserController {
 
   @Autowired
   private JWTService jwtService;
+
+  @Autowired
+  private DateConverterService dateConverterService;
 
   public UserController(JWTService jwtService) {
     this.jwtService = jwtService;
@@ -59,10 +65,10 @@ public class UserController {
 
       String jwtToken = jwtService.generateToken(user.getId());
 
-      JsonObject jsonResponse = new JsonObject();
-      jsonResponse.addProperty("token", jwtToken);
+      Map<String, String> reponseToken = new HashMap<>();
+      reponseToken.put("token", jwtToken);
 
-      return ResponseEntity.ok().body(jsonResponse.toString());
+      return ResponseEntity.ok().body(reponseToken);
     } catch (Exception e) {
       return ResponseEntity
         .badRequest()
@@ -106,10 +112,10 @@ public class UserController {
 
       String jwtToken = jwtService.generateToken(user.getId());
 
-      JsonObject jsonResponse = new JsonObject();
-      jsonResponse.addProperty("token", jwtToken);
+      Map<String, String> responseToken = new HashMap<>();
+      responseToken.put("token", jwtToken);
 
-      return ResponseEntity.ok().body(jsonResponse.toString());
+      return ResponseEntity.ok().body(responseToken);
     } catch (Exception e) {
       return ResponseEntity.badRequest().body("{'message' : 'Error on Login'}");
     }
@@ -127,7 +133,22 @@ public class UserController {
       }
       DbUser user = optionalUser.get();
 
-      return ResponseEntity.ok().body(user);
+      UserDTO userDTO = new UserDTO();
+      userDTO.setId(user.getId());
+      userDTO.setName(user.getName());
+      userDTO.setEmail(user.getEmail());
+
+      String formattedCreatedDate = dateConverterService.convertIsoToLocalDate(
+        user.getCreatedAt()
+      );
+      String formattedUpdatedDate = dateConverterService.convertIsoToLocalDate(
+        user.getUpdatedAt()
+      );
+
+      userDTO.setCreatedAt(formattedCreatedDate);
+      userDTO.setUpdatedAt(formattedUpdatedDate);
+
+      return ResponseEntity.ok().body(userDTO);
     } catch (Exception e) {
       return ResponseEntity.badRequest().body("{'message' : 'invalid jwt'}");
     }

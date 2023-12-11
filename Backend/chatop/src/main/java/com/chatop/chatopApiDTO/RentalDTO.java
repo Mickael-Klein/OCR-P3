@@ -1,4 +1,4 @@
-package com.chatop.chatopApiModel;
+package com.chatop.chatopApiDTO;
 
 import java.math.BigDecimal;
 import java.util.List;

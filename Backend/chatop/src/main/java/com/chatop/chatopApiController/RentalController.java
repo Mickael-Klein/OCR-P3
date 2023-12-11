@@ -2,9 +2,9 @@ package com.chatop.chatopApiController;
 
 import com.chatop.ReqResModel.Request.AddRentalRequest;
 import com.chatop.ReqResModel.Request.PutRentalRequest;
+import com.chatop.chatopApiDTO.RentalDTO;
+import com.chatop.chatopApiDTO.RentalsDTO;
 import com.chatop.chatopApiModel.Rental;
-import com.chatop.chatopApiModel.RentalDTO;
-import com.chatop.chatopApiModel.RentalsDTO;
 import com.chatop.chatopApiService.RentalService;
 import com.chatop.utils.DateConverterService;
 import jakarta.validation.Valid;
