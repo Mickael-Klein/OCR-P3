@@ -4,10 +4,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import lombok.Data;
-import org.springframework.web.multipart.MultipartFile;
 
 @Data
-public class AddRentalRequest {
+public class PutRentalRequest {
 
   @NotBlank(message = "The rental name must be provided")
   String name;
@@ -17,8 +16,6 @@ public class AddRentalRequest {
 
   @NotNull(message = "The rental price must be provided")
   BigDecimal price;
-
-  private MultipartFile picture;
 
   @NotBlank(message = "The rental description must be provided")
   String description;
