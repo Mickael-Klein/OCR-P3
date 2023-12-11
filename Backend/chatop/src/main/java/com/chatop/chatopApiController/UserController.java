@@ -52,7 +52,7 @@ public class UserController {
       if (emailAlreadyRegistered) {
         return ResponseEntity
           .badRequest()
-          .body("{'message' : 'Email already registered'}");
+          .body("{'message' : 'Email is already registered'}");
       }
 
       DbUser user = userService.saveUser(request);
