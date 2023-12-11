@@ -2,7 +2,6 @@ package com.chatop.chatopApiController;
 
 import com.chatop.ReqResModel.Request.AddRentalRequest;
 import com.chatop.ReqResModel.Request.PutRentalRequest;
-import com.chatop.chatopApiDTO.RentalDTO;
 import com.chatop.chatopApiDTO.RentalsDTO;
 import com.chatop.chatopApiModel.Rental;
 import com.chatop.chatopApiService.RentalService;
@@ -82,18 +81,14 @@ public class RentalController {
           .body("{'message': 'Incorrect rental's id request parameter'}");
       }
       Rental rental = optionalRental.get();
-      RentalDTO rentalDTO = new RentalDTO();
+      RentalsDTO rentalDTO = new RentalsDTO();
       rentalDTO.setId(rental.getId());
       rentalDTO.setName(rental.getName());
       rentalDTO.setSurface(rental.getSurface());
       rentalDTO.setPrice(rental.getPrice());
-
-      List<String> pictureArray = new ArrayList<>();
-      pictureArray.add("http://localhost:3001" + rental.getPicture());
-      rentalDTO.setPicture(pictureArray);
-
+      rentalDTO.setPicture("http://localhsot:3001" + rental.getPicture());
       rentalDTO.setDescription(rental.getDescription());
-      rentalDTO.setOwner_id(rental.getId());
+      rentalDTO.setOwnerId(rental.getOwnerId());
       rentalDTO.setCreated_at(rental.getCreatedAt().toLocalDate());
       rentalDTO.setUpdated_at(rental.getUpdatedAt().toLocalDate());
 

@@ -5,13 +5,13 @@ import java.time.LocalDate;
 import lombok.Data;
 
 @Data
-public class RentalsDTO { // This represent an element of the list of rentals which will be send in rentals/ get all method
+public class RentalsDTO {
 
   private Long id;
   private String name;
   private BigDecimal surface;
   private BigDecimal price;
-  private String picture; // String instead of List<String>, compare to RentalDTO class
+  private String picture;
   private String description;
   private Long ownerId;
   private LocalDate created_at;
