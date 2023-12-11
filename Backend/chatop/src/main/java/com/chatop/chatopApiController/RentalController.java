@@ -6,7 +6,6 @@ import com.chatop.chatopApiDTO.RentalDTO;
 import com.chatop.chatopApiDTO.RentalsDTO;
 import com.chatop.chatopApiModel.Rental;
 import com.chatop.chatopApiService.RentalService;
-import com.chatop.utils.DateConverterService;
 import jakarta.validation.Valid;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -44,9 +43,6 @@ public class RentalController {
   @Autowired
   private RentalService rentalService;
 
-  @Autowired
-  private DateConverterService dateConverterService;
-
   @GetMapping("/rentals")
   public ResponseEntity<Object> getAllRentals() {
     try {
@@ -61,16 +57,8 @@ public class RentalController {
         rentalsDTO.setPicture("http://localhost:3001" + rental.getPicture());
         rentalsDTO.setDescription(rental.getDescription());
         rentalsDTO.setOwnerId(rental.getOwnerId());
-
-        String formattedCreatedDate = dateConverterService.convertIsoToLocalDate(
-          rental.getCreatedAt()
-        );
-        String formattedUpdatedDate = dateConverterService.convertIsoToLocalDate(
-          rental.getUpdatedAt()
-        );
-
-        rentalsDTO.setCreated_at(formattedCreatedDate);
-        rentalsDTO.setUpdated_at(formattedUpdatedDate);
+        rentalsDTO.setCreated_at(rental.getCreatedAt().toLocalDate());
+        rentalsDTO.setUpdated_at(rental.getUpdatedAt().toLocalDate());
 
         rentalsListToSend.add(rentalsDTO);
       }
@@ -106,16 +94,8 @@ public class RentalController {
 
       rentalDTO.setDescription(rental.getDescription());
       rentalDTO.setOwner_id(rental.getId());
-
-      String formattedCreatedDate = dateConverterService.convertIsoToLocalDate(
-        rental.getCreatedAt()
-      );
-      String formattedUpdatedDate = dateConverterService.convertIsoToLocalDate(
-        rental.getUpdatedAt()
-      );
-
-      rentalDTO.setCreated_at(formattedCreatedDate);
-      rentalDTO.setUpdated_at(formattedUpdatedDate);
+      rentalDTO.setCreated_at(rental.getCreatedAt().toLocalDate());
+      rentalDTO.setUpdated_at(rental.getUpdatedAt().toLocalDate());
 
       return ResponseEntity.ok().body(rentalDTO);
     } catch (Exception e) {
@@ -175,7 +155,10 @@ public class RentalController {
       rentalToSave.setOwnerId(userId);
 
       rentalService.saveRental(rentalToSave);
-      return ResponseEntity.ok().body("{'message': 'Rental created !'}");
+
+      Map<String, String> responseMap = new HashMap<>();
+      responseMap.put("message", "Rental created");
+      return ResponseEntity.ok().body(responseMap);
     } catch (Exception e) {
       return ResponseEntity
         .badRequest()

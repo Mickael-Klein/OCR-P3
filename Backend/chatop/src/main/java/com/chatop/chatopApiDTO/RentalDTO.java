@@ -1,6 +1,7 @@
 package com.chatop.chatopApiDTO;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import lombok.Data;
 
@@ -14,6 +15,6 @@ public class RentalDTO {
   private List<String> picture;
   private String description;
   private Long owner_id;
-  private String created_at;
-  private String updated_at;
+  private LocalDate created_at;
+  private LocalDate updated_at;
 }

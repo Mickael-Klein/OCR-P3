@@ -6,7 +6,6 @@ import com.chatop.chatopApiDTO.UserDTO;
 import com.chatop.chatopApiModel.DbUser;
 import com.chatop.chatopApiService.JWTService;
 import com.chatop.chatopApiService.UserService;
-import com.chatop.utils.DateConverterService;
 import jakarta.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,9 +30,6 @@ public class UserController {
 
   @Autowired
   private JWTService jwtService;
-
-  @Autowired
-  private DateConverterService dateConverterService;
 
   public UserController(JWTService jwtService) {
     this.jwtService = jwtService;
@@ -137,16 +133,8 @@ public class UserController {
       userDTO.setId(user.getId());
       userDTO.setName(user.getName());
       userDTO.setEmail(user.getEmail());
-
-      String formattedCreatedDate = dateConverterService.convertIsoToLocalDate(
-        user.getCreatedAt()
-      );
-      String formattedUpdatedDate = dateConverterService.convertIsoToLocalDate(
-        user.getUpdatedAt()
-      );
-
-      userDTO.setCreatedAt(formattedCreatedDate);
-      userDTO.setUpdatedAt(formattedUpdatedDate);
+      userDTO.setCreatedAt(user.getCreatedAt().toLocalDate());
+      userDTO.setUpdatedAt(user.getUpdatedAt().toLocalDate());
 
       return ResponseEntity.ok().body(userDTO);
     } catch (Exception e) {
