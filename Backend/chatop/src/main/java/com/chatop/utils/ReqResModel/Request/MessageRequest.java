@@ -1,4 +1,4 @@
-package com.chatop.ReqResModel.Request;
+package com.chatop.utils.ReqResModel.Request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -11,8 +11,8 @@ public class MessageRequest {
   String message;
 
   @NotNull(message = "A user id is required")
-  Long userId;
+  Long user_id;
 
   @NotNull(message = "A rental id is required")
-  Long rentalId;
+  Long rental_id;
 }

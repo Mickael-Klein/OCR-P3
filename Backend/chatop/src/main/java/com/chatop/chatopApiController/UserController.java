@@ -3,6 +3,7 @@ package com.chatop.chatopApiController;
 import com.chatop.chatopApiDTO.UserDTO;
 import com.chatop.chatopApiModel.DbUser;
 import com.chatop.chatopApiService.UserService;
+import com.chatop.utils.ReqResModel.Response.UserResponseService;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,9 @@ public class UserController {
   @Autowired
   private UserService userService;
 
+  @Autowired
+  private UserResponseService userResponseService;
+
   @GetMapping("/{id}")
   public ResponseEntity<Object> getUser(@PathVariable final Long id) {
     try {
@@ -25,7 +29,7 @@ public class UserController {
       if (!optionalUser.isPresent()) {
         return ResponseEntity
           .badRequest()
-          .body("{'message' : 'No user found with id: " + id + "'}");
+          .body(userResponseService.getUserInvalidIdParameterJsonString());
       }
       DbUser user = optionalUser.get();
 
@@ -33,14 +37,14 @@ public class UserController {
       userDTO.setId(user.getId());
       userDTO.setName(user.getName());
       userDTO.setEmail(user.getEmail());
-      userDTO.setCreatedAt(user.getCreatedAt().toLocalDate());
-      userDTO.setUpdatedAt(user.getUpdatedAt().toLocalDate());
+      userDTO.setCreated_at(user.getCreatedAt().toLocalDate());
+      userDTO.setUpdated_at(user.getUpdatedAt().toLocalDate());
 
       return ResponseEntity.ok().body(userDTO);
     } catch (Exception e) {
       return ResponseEntity
         .badRequest()
-        .body("{'message' : 'An error occured'}");
+        .body(userResponseService.getUserErrorOccurJsonString());
     }
   }
 }

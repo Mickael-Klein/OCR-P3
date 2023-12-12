@@ -1,8 +1,8 @@
 package com.chatop.chatopApiService;
 
-import com.chatop.ReqResModel.Request.RegisterRequest;
 import com.chatop.chatopApiModel.DbUser;
 import com.chatop.chatopApiRepository.UserRepository;
+import com.chatop.utils.ReqResModel.Request.RegisterRequest;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import lombok.Data;

@@ -1,10 +1,11 @@
 package com.chatop.chatopApiController;
 
-import com.chatop.ReqResModel.Request.AddRentalRequest;
-import com.chatop.ReqResModel.Request.PutRentalRequest;
 import com.chatop.chatopApiDTO.RentalsDTO;
 import com.chatop.chatopApiModel.Rental;
 import com.chatop.chatopApiService.RentalService;
+import com.chatop.utils.ReqResModel.Request.AddRentalRequest;
+import com.chatop.utils.ReqResModel.Request.PutRentalRequest;
+import com.chatop.utils.ReqResModel.Response.RentalResponseService;
 import jakarta.validation.Valid;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -42,6 +43,9 @@ public class RentalController {
   @Autowired
   private RentalService rentalService;
 
+  @Autowired
+  private RentalResponseService rentalResponseService;
+
   @GetMapping("/rentals")
   public ResponseEntity<Object> getAllRentals() {
     try {
@@ -55,7 +59,7 @@ public class RentalController {
         rentalsDTO.setPrice(rental.getPrice());
         rentalsDTO.setPicture("http://localhost:3001" + rental.getPicture());
         rentalsDTO.setDescription(rental.getDescription());
-        rentalsDTO.setOwnerId(rental.getOwnerId());
+        rentalsDTO.setOwner_id(rental.getOwnerId());
         rentalsDTO.setCreated_at(rental.getCreatedAt().toLocalDate());
         rentalsDTO.setUpdated_at(rental.getUpdatedAt().toLocalDate());
 
@@ -67,7 +71,7 @@ public class RentalController {
     } catch (Exception e) {
       return ResponseEntity
         .internalServerError()
-        .body("{'message': 'An error occured'}");
+        .body(rentalResponseService.getErrorOccurJsonString());
     }
   }
 
@@ -78,7 +82,9 @@ public class RentalController {
       if (!optionalRental.isPresent()) {
         return ResponseEntity
           .badRequest()
-          .body("{'message': 'Incorrect rental's id request parameter'}");
+          .body(
+            rentalResponseService.getIncorrectRentalIdParameterJsonString()
+          );
       }
       Rental rental = optionalRental.get();
       RentalsDTO rentalDTO = new RentalsDTO();
@@ -88,7 +94,7 @@ public class RentalController {
       rentalDTO.setPrice(rental.getPrice());
       rentalDTO.setPicture("http://localhost:3001" + rental.getPicture());
       rentalDTO.setDescription(rental.getDescription());
-      rentalDTO.setOwnerId(rental.getOwnerId());
+      rentalDTO.setOwner_id(rental.getOwnerId());
       rentalDTO.setCreated_at(rental.getCreatedAt().toLocalDate());
       rentalDTO.setUpdated_at(rental.getUpdatedAt().toLocalDate());
 
@@ -96,7 +102,7 @@ public class RentalController {
     } catch (Exception e) {
       return ResponseEntity
         .internalServerError()
-        .body("{'message': 'An error occured'}");
+        .body(rentalResponseService.getErrorOccurJsonString());
     }
   }
 
@@ -114,7 +120,7 @@ public class RentalController {
       if (isRequestPayloadInvalid) {
         return ResponseEntity
           .badRequest()
-          .body("{'message': 'Incorrect rental's datas'}");
+          .body(rentalResponseService.getIncorrectRentalDataJsonString());
       }
 
       MultipartFile picture = addRentalRequest.getPicture();
@@ -122,13 +128,13 @@ public class RentalController {
       if (picture == null || picture.isEmpty()) {
         return ResponseEntity
           .badRequest()
-          .body("{'message': 'The rental's picture is missing'}");
+          .body(rentalResponseService.getMissingPictureJsonString());
       }
 
       if (!isImage(picture.getBytes())) {
         return ResponseEntity
           .badRequest()
-          .body("{'message': 'The rental's picture provided is not an image'}");
+          .body(rentalResponseService.getNotImageJsonString());
       }
 
       String pictureName =
@@ -150,14 +156,13 @@ public class RentalController {
       rentalToSave.setOwnerId(userId);
 
       rentalService.saveRental(rentalToSave);
-
-      Map<String, String> responseMap = new HashMap<>();
-      responseMap.put("message", "Rental created");
-      return ResponseEntity.ok().body(responseMap);
+      return ResponseEntity
+        .ok()
+        .body(rentalResponseService.getRentalCreatedJsonString());
     } catch (Exception e) {
       return ResponseEntity
         .badRequest()
-        .body("{'message' : 'Error creating rental'}");
+        .body(rentalResponseService.getErrorCreatingRentalJsonString());
     }
   }
 
@@ -176,14 +181,18 @@ public class RentalController {
       if (isRequestPayloadInvalid) {
         return ResponseEntity
           .badRequest()
-          .body("{'message': 'Incorrect rental's datas for updating'}");
+          .body(
+            rentalResponseService.getIncorrectDataForRentalUpdateJsonString()
+          );
       }
 
       Optional<Rental> optionalRental = rentalService.getRentalById(id);
       if (!optionalRental.isPresent()) {
         return ResponseEntity
           .badRequest()
-          .body("{'message': 'Incorrect rental's id in request url'}");
+          .body(
+            rentalResponseService.getIncorrectRentalIdParameterJsonString()
+          );
       }
 
       Rental rental = optionalRental.get();
@@ -191,7 +200,9 @@ public class RentalController {
       if (rental.getOwnerId() != userId) {
         return ResponseEntity
           .badRequest()
-          .body("{'message': 'User isn't authorize to modify this rental'}");
+          .body(
+            rentalResponseService.getUserNotAuthorizeForRentalUpdateJsonString()
+          );
       }
 
       rental.setName(putRentalRequest.getName());
@@ -202,11 +213,13 @@ public class RentalController {
 
       rentalService.saveRental(rental);
 
-      return ResponseEntity.ok().body("{'message': 'Rental updated !'}");
+      return ResponseEntity
+        .ok()
+        .body(rentalResponseService.getRentalUpdatedJsonString());
     } catch (Exception e) {
       return ResponseEntity
         .badRequest()
-        .body("{'message' : 'Error updating rental'}");
+        .body(rentalResponseService.getErrorOnUpdateJsonString());
     }
   }
 

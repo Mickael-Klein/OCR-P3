@@ -13,7 +13,7 @@ public class RentalsDTO {
   private BigDecimal price;
   private String picture;
   private String description;
-  private Long ownerId;
+  private Long owner_id;
   private LocalDate created_at;
   private LocalDate updated_at;
 }

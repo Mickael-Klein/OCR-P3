@@ -1,4 +1,4 @@
-package com.chatop.ReqResModel.Request;
+package com.chatop.utils.ReqResModel.Request;
 
 import jakarta.validation.constraints.*;
 import lombok.Data;

@@ -1,10 +1,11 @@
 package com.chatop.chatopApiController;
 
-import com.chatop.ReqResModel.Request.MessageRequest;
 import com.chatop.chatopApiModel.Message;
 import com.chatop.chatopApiModel.Rental;
 import com.chatop.chatopApiService.MessageService;
 import com.chatop.chatopApiService.RentalService;
+import com.chatop.utils.ReqResModel.Request.MessageRequest;
+import com.chatop.utils.ReqResModel.Response.MessageResponseService;
 import jakarta.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -27,6 +28,9 @@ public class MessageController {
   @Autowired
   private RentalService rentalService;
 
+  @Autowired
+  private MessageResponseService messageResponseService;
+
   @PostMapping("/api/messages")
   public ResponseEntity<Object> sendMessage(
     @AuthenticationPrincipal Jwt jwt,
@@ -38,46 +42,39 @@ public class MessageController {
       if (isRequestPayloadInvalid) {
         return ResponseEntity
           .badRequest()
-          .body("{'message' : 'The Message Request is invalid'}");
+          .body(messageResponseService.getInvalidMessageRequestJsonString());
       }
 
       String userIdFromJwtToken = jwt.getSubject();
       Long userIdFromJwtTokenLong = Long.parseLong(userIdFromJwtToken);
 
-      System.out.println("userIdFromJwtTokenLong = " + userIdFromJwtTokenLong);
-      System.out.println("request user id = " + request.getUserId());
-
-      if (userIdFromJwtTokenLong != request.getUserId()) {
+      if (userIdFromJwtTokenLong != request.getUser_id()) {
         return ResponseEntity
           .badRequest()
-          .body(
-            "{'message' : 'Id in token doesn't match the request user id provided'}"
-          );
+          .body(messageResponseService.getTokenMismatchingJsonString());
       }
 
       Optional<Rental> optionalRentalTargetted = rentalService.getRentalById(
-        request.getRentalId()
+        request.getRental_id()
       );
       if (!optionalRentalTargetted.isPresent()) {
         return ResponseEntity
           .badRequest()
-          .body(
-            "{'message' : 'The rental id provided doesn't match any rental in database'}"
-          );
+          .body(messageResponseService.getInvalidRentalIdJsonString());
       }
 
       Message messageToSave = new Message();
 
       messageToSave.setMessage(request.getMessage());
-      messageToSave.setUser_id(request.getUserId());
-      messageToSave.setRental_id(request.getRentalId());
+      messageToSave.setUser_id(request.getUser_id());
+      messageToSave.setRental_id(request.getRental_id());
       messageToSave.setCreated_at(LocalDateTime.now());
       messageToSave.setUpdated_at(LocalDateTime.now());
 
       messageService.saveMessage(messageToSave);
       return ResponseEntity
         .ok()
-        .body("{'message': 'Message sent with success'}");
+        .body(messageResponseService.getMessageSentWithSuccessJsonString());
     } catch (Exception e) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{}");
     }
