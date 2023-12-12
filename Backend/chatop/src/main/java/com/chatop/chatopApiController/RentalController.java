@@ -86,7 +86,7 @@ public class RentalController {
       rentalDTO.setName(rental.getName());
       rentalDTO.setSurface(rental.getSurface());
       rentalDTO.setPrice(rental.getPrice());
-      rentalDTO.setPicture("http://localhsot:3001" + rental.getPicture());
+      rentalDTO.setPicture("http://localhost:3001" + rental.getPicture());
       rentalDTO.setDescription(rental.getDescription());
       rentalDTO.setOwnerId(rental.getOwnerId());
       rentalDTO.setCreated_at(rental.getCreatedAt().toLocalDate());
