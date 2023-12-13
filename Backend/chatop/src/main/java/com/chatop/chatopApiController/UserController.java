@@ -3,7 +3,7 @@ package com.chatop.chatopApiController;
 import com.chatop.chatopApiDTO.UserDTO;
 import com.chatop.chatopApiModel.DbUser;
 import com.chatop.chatopApiService.UserService;
-import com.chatop.utils.ReqResModel.Response.UserResponseService;
+import com.chatop.utils.ReqResModelsAndServices.Response.UserResponseService;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

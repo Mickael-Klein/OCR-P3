@@ -1,10 +1,10 @@
-package com.chatop.utils.ReqResModel.Request;
+package com.chatop.utils.ReqResModelsAndServices.Request;
 
 import jakarta.validation.constraints.*;
 import lombok.Data;
 
 @Data
-public class RegisterRequest {
+public class RegisterRequestModel {
 
   @NotBlank(message = "An email is required")
   @Pattern(

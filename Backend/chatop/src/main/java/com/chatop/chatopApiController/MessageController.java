@@ -2,10 +2,11 @@ package com.chatop.chatopApiController;
 
 import com.chatop.chatopApiModel.Message;
 import com.chatop.chatopApiModel.Rental;
+import com.chatop.chatopApiService.JWTService;
 import com.chatop.chatopApiService.MessageService;
 import com.chatop.chatopApiService.RentalService;
-import com.chatop.utils.ReqResModel.Request.MessageRequest;
-import com.chatop.utils.ReqResModel.Response.MessageResponseService;
+import com.chatop.utils.ReqResModelsAndServices.Request.MessageRequestModel;
+import com.chatop.utils.ReqResModelsAndServices.Response.MessageResponseService;
 import jakarta.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -23,6 +24,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class MessageController {
 
   @Autowired
+  private JWTService jwtService;
+
+  @Autowired
   private MessageService messageService;
 
   @Autowired
@@ -34,7 +38,7 @@ public class MessageController {
   @PostMapping("/api/messages")
   public ResponseEntity<Object> sendMessage(
     @AuthenticationPrincipal Jwt jwt,
-    @Valid @RequestBody MessageRequest request,
+    @Valid @RequestBody MessageRequestModel request,
     BindingResult bindingResult
   ) {
     try {
@@ -45,12 +49,13 @@ public class MessageController {
           .body(messageResponseService.getInvalidMessageRequestJsonString());
       }
 
-      String userIdFromJwtToken = jwt.getSubject();
-      Long userIdFromJwtTokenLong = Long.parseLong(userIdFromJwtToken);
+      Long userIdFromJwtToken = jwtService.getUserIdFromJwtLong(jwt);
 
-      if (userIdFromJwtTokenLong != request.getUser_id()) {
+      if (
+        !jwtService.areUserIdMatching(userIdFromJwtToken, request.getUser_id())
+      ) {
         return ResponseEntity
-          .badRequest()
+          .status(HttpStatus.UNAUTHORIZED)
           .body(messageResponseService.getTokenMismatchingJsonString());
       }
 
@@ -76,7 +81,9 @@ public class MessageController {
         .ok()
         .body(messageResponseService.getMessageSentWithSuccessJsonString());
     } catch (Exception e) {
-      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{}");
+      return ResponseEntity
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .body(messageResponseService.getIntenalServerErrorMessageJsonString());
     }
   }
 }

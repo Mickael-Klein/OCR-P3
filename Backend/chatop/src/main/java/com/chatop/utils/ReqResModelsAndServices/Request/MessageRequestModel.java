@@ -1,11 +1,11 @@
-package com.chatop.utils.ReqResModel.Request;
+package com.chatop.utils.ReqResModelsAndServices.Request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
-public class MessageRequest {
+public class MessageRequestModel {
 
   @NotBlank(message = "A text message is required")
   String message;

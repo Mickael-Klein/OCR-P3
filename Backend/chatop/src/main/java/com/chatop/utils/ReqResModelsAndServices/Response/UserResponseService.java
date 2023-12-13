@@ -1,4 +1,4 @@
-package com.chatop.utils.ReqResModel.Response;
+package com.chatop.utils.ReqResModelsAndServices.Response;
 
 import com.nimbusds.jose.shaded.gson.JsonObject;
 import org.springframework.stereotype.Service;

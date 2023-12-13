@@ -42,4 +42,15 @@ public class JWTService {
   public Jwt decodeToken(String token) {
     return jwtDecoder.decode(token);
   }
+
+  public Long getUserIdFromJwtLong(Jwt jwt) {
+    return Long.parseLong(jwt.getSubject());
+  }
+
+  public Boolean areUserIdMatching(
+    Long userIdFromJwt,
+    Long userIdFromRequestPayload
+  ) {
+    return userIdFromJwt == userIdFromRequestPayload;
+  }
 }

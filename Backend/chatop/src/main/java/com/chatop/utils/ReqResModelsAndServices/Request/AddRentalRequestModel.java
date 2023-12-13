@@ -1,4 +1,4 @@
-package com.chatop.utils.ReqResModel.Request;
+package com.chatop.utils.ReqResModelsAndServices.Request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -7,7 +7,7 @@ import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
 @Data
-public class AddRentalRequest {
+public class AddRentalRequestModel {
 
   @NotBlank(message = "The rental name must be provided")
   String name;

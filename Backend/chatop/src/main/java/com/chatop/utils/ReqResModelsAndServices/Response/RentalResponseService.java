@@ -1,13 +1,19 @@
-package com.chatop.utils.ReqResModel.Response;
+package com.chatop.utils.ReqResModelsAndServices.Response;
 
+import com.chatop.chatopApiDTO.RentalsDTO;
 import com.nimbusds.jose.shaded.gson.JsonObject;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.springframework.stereotype.Service;
 
 @Service
 public class RentalResponseService {
 
   private static final String MESSAGE_TITLE = "message";
-  private static final String ERROR_OCCURE = "An error occurred";
+  private static final String RENTALS_TITLE = "rentals";
+  private static final String ERROR_OCCURE =
+    "An internal server error occurred";
   private static final String INCORRECT_RENTAL_ID_PARAMETER =
     "Incorrect rental's id request parameter";
   private static final String INCORRECT_RENTAL_DATA = "Incorrect rental datas";
@@ -72,5 +78,13 @@ public class RentalResponseService {
 
   public String getErrorOnUpdateJsonString() {
     return createMessageJson(ERROR_ON_UPDATE).toString();
+  }
+
+  public Map<String, List<RentalsDTO>> getAllRentalsMap(
+    List<RentalsDTO> rentalsDTOList
+  ) {
+    Map<String, List<RentalsDTO>> responseMap = new HashMap<>();
+    responseMap.put(RENTALS_TITLE, rentalsDTOList);
+    return responseMap;
   }
 }

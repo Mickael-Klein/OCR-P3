@@ -2,7 +2,7 @@ package com.chatop.chatopApiService;
 
 import com.chatop.chatopApiModel.DbUser;
 import com.chatop.chatopApiRepository.UserRepository;
-import com.chatop.utils.ReqResModel.Request.RegisterRequest;
+import com.chatop.utils.ReqResModelsAndServices.Request.RegisterRequestModel;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import lombok.Data;
@@ -25,7 +25,7 @@ public class UserService {
     return optionalUser.isPresent();
   }
 
-  public DbUser saveUser(RegisterRequest request) {
+  public DbUser saveUser(RegisterRequestModel request) {
     DbUser user = new DbUser();
 
     LocalDateTime now = LocalDateTime.now();

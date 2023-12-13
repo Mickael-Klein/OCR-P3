@@ -1,4 +1,4 @@
-package com.chatop.utils.ReqResModel.Response;
+package com.chatop.utils.ReqResModelsAndServices.Response;
 
 import com.nimbusds.jose.shaded.gson.JsonObject;
 import org.springframework.stereotype.Service;
@@ -15,6 +15,8 @@ public class MessageResponseService {
     "The rental id provided doesn't match any rental in database";
   private static final String MESSAGE_SENT_WITH_SUCCESS =
     "Message send with success";
+  private static final String INTERNAL_SERVER_ERROR =
+    "An internal error occured while sending message";
 
   public JsonObject createMessageJson(String message) {
     JsonObject jsonObject = new JsonObject();
@@ -36,5 +38,9 @@ public class MessageResponseService {
 
   public String getMessageSentWithSuccessJsonString() {
     return createMessageJson(MESSAGE_SENT_WITH_SUCCESS).toString();
+  }
+
+  public String getIntenalServerErrorMessageJsonString() {
+    return createMessageJson(INTERNAL_SERVER_ERROR).toString();
   }
 }

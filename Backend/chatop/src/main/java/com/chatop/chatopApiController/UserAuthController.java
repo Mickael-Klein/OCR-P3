@@ -4,9 +4,9 @@ import com.chatop.chatopApiDTO.UserDTO;
 import com.chatop.chatopApiModel.DbUser;
 import com.chatop.chatopApiService.JWTService;
 import com.chatop.chatopApiService.UserService;
-import com.chatop.utils.ReqResModel.Request.LoginRequest;
-import com.chatop.utils.ReqResModel.Request.RegisterRequest;
-import com.chatop.utils.ReqResModel.Response.UserResponseService;
+import com.chatop.utils.ReqResModelsAndServices.Request.LoginRequestModel;
+import com.chatop.utils.ReqResModelsAndServices.Request.RegisterRequestModel;
+import com.chatop.utils.ReqResModelsAndServices.Response.UserResponseService;
 import jakarta.validation.Valid;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +39,7 @@ public class UserAuthController {
 
   @PostMapping("/register")
   public ResponseEntity<Object> registerAccount(
-    @Valid @RequestBody RegisterRequest request,
+    @Valid @RequestBody RegisterRequestModel request,
     BindingResult bindingResult
   ) {
     try {
@@ -75,7 +75,7 @@ public class UserAuthController {
 
   @PostMapping("/login")
   public ResponseEntity<Object> login(
-    @Valid @RequestBody LoginRequest request,
+    @Valid @RequestBody LoginRequestModel request,
     BindingResult bindingResult
   ) {
     try {
@@ -122,10 +122,8 @@ public class UserAuthController {
   @GetMapping("/me")
   public ResponseEntity<Object> getMe(@AuthenticationPrincipal Jwt jwt) {
     try {
-      String userId = jwt.getSubject();
-      Optional<DbUser> optionalUser = userService.getUserById(
-        Long.parseLong(userId)
-      );
+      Long userId = jwtService.getUserIdFromJwtLong(jwt);
+      Optional<DbUser> optionalUser = userService.getUserById(userId);
       if (!optionalUser.isPresent()) {
         return ResponseEntity
           .badRequest()
