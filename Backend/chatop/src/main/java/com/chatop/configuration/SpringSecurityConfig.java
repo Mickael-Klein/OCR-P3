@@ -3,6 +3,7 @@ package com.chatop.configuration;
 import com.nimbusds.jose.jwk.source.ImmutableSecret;
 import javax.crypto.spec.SecretKeySpec;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,8 +24,8 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SpringSecurityConfig {
 
-  private String jwtKey =
-    "FkEXMxKTUNF7XT+RpAv4jnC51+XfiUM/j9MpcNVuP/0DBMkwZa6cxpI1v/xaOzVB"; // Change this value with env variable
+  @Value("${jwtKey}")
+  private String jwtKey;
 
   @Autowired
   private CustomUserDetailsService customUserDetailsService;
@@ -45,7 +46,12 @@ public class SpringSecurityConfig {
           .requestMatchers(
             "/api/auth/login",
             "/api/auth/register",
-            "/rentalPictures/**"
+            "/rentalPictures/**",
+            "/v2/api-docs", // Swagger endpoints
+            "/swagger-resources/**",
+            "/swagger-ui.html",
+            "/webjars/**",
+            "/swagger.json"
           )
           .permitAll()
           .anyRequest()
