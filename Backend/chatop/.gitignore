@@ -33,4 +33,4 @@ build/
 .vscode/
 
 ### Pictures in rental pictures directory ###
-/src/main/resources/static/rentalPictures
+/src/main/resources/static/rentalPictures/*
