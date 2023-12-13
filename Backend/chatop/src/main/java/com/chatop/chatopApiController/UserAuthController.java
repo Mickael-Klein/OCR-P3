@@ -4,6 +4,7 @@ import com.chatop.chatopApiDTO.UserDTO;
 import com.chatop.chatopApiModel.DbUser;
 import com.chatop.chatopApiService.JWTService;
 import com.chatop.chatopApiService.UserService;
+import com.chatop.utils.EntityAndDTOCreation.EntityAndDTOCreationService;
 import com.chatop.utils.ReqResModelsAndServices.Request.LoginRequestModel;
 import com.chatop.utils.ReqResModelsAndServices.Request.RegisterRequestModel;
 import com.chatop.utils.ReqResModelsAndServices.Response.UserResponseService;
@@ -33,13 +34,16 @@ public class UserAuthController {
   @Autowired
   UserResponseService userResponseService;
 
+  @Autowired
+  EntityAndDTOCreationService entityAndDTOCreationService;
+
   public UserAuthController(JWTService jwtService) {
     this.jwtService = jwtService;
   }
 
   @PostMapping("/register")
   public ResponseEntity<Object> registerAccount(
-    @Valid @RequestBody RegisterRequestModel request,
+    @Valid @RequestBody RegisterRequestModel registerRequestUser,
     BindingResult bindingResult
   ) {
     try {
@@ -51,7 +55,7 @@ public class UserAuthController {
       }
 
       Boolean emailAlreadyRegistered = userService.isEmailAlreadyUsed(
-        request.getEmail()
+        registerRequestUser.getEmail()
       );
       if (emailAlreadyRegistered) {
         return ResponseEntity
@@ -59,7 +63,10 @@ public class UserAuthController {
           .body(userResponseService.getRegisteringEmailAlreadyUsedJsonString());
       }
 
-      DbUser user = userService.saveUser(request);
+      DbUser factoryUser = entityAndDTOCreationService.getFactoryUserRegisterEntity(
+        registerRequestUser
+      );
+      DbUser user = userService.saveUser(factoryUser);
 
       String jwtToken = jwtService.generateToken(user.getId());
 
@@ -81,18 +88,14 @@ public class UserAuthController {
     try {
       Boolean isRequestPayloadInvalid = bindingResult.hasErrors();
       if (isRequestPayloadInvalid) {
-        return ResponseEntity
-          .badRequest()
-          .body(userResponseService.getLoginBadCredentialsJsonString());
+        return handleInvalidCredentials();
       }
 
       Optional<DbUser> optionalUser = userService.getUserByEmail(
         request.getEmail()
       );
       if (!optionalUser.isPresent()) {
-        return ResponseEntity
-          .badRequest()
-          .body(userResponseService.getLoginBadCredentialsJsonString());
+        return handleInvalidCredentials();
       }
 
       DbUser user = optionalUser.get();
@@ -102,9 +105,7 @@ public class UserAuthController {
         user
       );
       if (!isPasswordCorrect) {
-        return ResponseEntity
-          .badRequest()
-          .body(userResponseService.getLoginBadCredentialsJsonString());
+        return handleInvalidCredentials();
       }
 
       String jwtToken = jwtService.generateToken(user.getId());
@@ -119,6 +120,12 @@ public class UserAuthController {
     }
   }
 
+  private ResponseEntity<Object> handleInvalidCredentials() {
+    return ResponseEntity
+      .badRequest()
+      .body(userResponseService.getLoginBadCredentialsJsonString());
+  }
+
   @GetMapping("/me")
   public ResponseEntity<Object> getMe(@AuthenticationPrincipal Jwt jwt) {
     try {
@@ -131,12 +138,7 @@ public class UserAuthController {
       }
       DbUser user = optionalUser.get();
 
-      UserDTO userDTO = new UserDTO();
-      userDTO.setId(user.getId());
-      userDTO.setName(user.getName());
-      userDTO.setEmail(user.getEmail());
-      userDTO.setCreated_at(user.getCreatedAt().toLocalDate());
-      userDTO.setUpdated_at(user.getUpdatedAt().toLocalDate());
+      UserDTO userDTO = entityAndDTOCreationService.getFactoryUserDTO(user);
 
       return ResponseEntity.ok().body(userDTO);
     } catch (Exception e) {

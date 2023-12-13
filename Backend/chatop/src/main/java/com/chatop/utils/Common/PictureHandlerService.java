@@ -1,5 +1,6 @@
 package com.chatop.utils.Common;
 
+import com.chatop.utils.Interface.CommonInterface.PictureHandlerServiceInterface;
 import com.chatop.utils.ReqResModelsAndServices.Response.RentalResponseService;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -16,7 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
-public class PictureHandlerService {
+public class PictureHandlerService implements PictureHandlerServiceInterface {
 
   @Value("${upload-dir}")
   private String uploadDir;
@@ -29,31 +30,37 @@ public class PictureHandlerService {
   private static final String ERROR = "error";
   private static final String RENTAL_PICTURES_DIRECTORY = "/rentalPictures/";
 
+  @Override
   public String getSuccessConstant() {
     return SUCCESS;
   }
 
+  @Override
   public String getUrlConstant() {
     return URL;
   }
 
+  @Override
   public String getErrorConstant() {
     return ERROR;
   }
 
+  @Override
   public String generatePictureName(String pictureName) {
     String name = System.currentTimeMillis() + "_" + pictureName;
     return name;
   }
 
-  public String generatePictureServerAdress(String pictureName) {
+  @Override
+  public String generatePictureServerAddress(String pictureName) {
     String url = RENTAL_PICTURES_DIRECTORY + pictureName;
     return url;
   }
 
+  @Override
   public String getPictureServerAddress(String pictureName) {
     String fullPictureName = generatePictureName(pictureName);
-    return generatePictureServerAdress(fullPictureName);
+    return generatePictureServerAddress(fullPictureName);
   }
 
   private Boolean isImage(byte[] bytes) {
@@ -65,7 +72,8 @@ public class PictureHandlerService {
     }
   }
 
-  public Map<String, Object> savePictureInServerAndReturnServerAdressOrError(
+  @Override
+  public Map<String, Object> savePictureInServerAndReturnServerAddressOrError(
     MultipartFile picture
   ) throws IOException { // déclarez que la méthode peut lancer une IOException
     Map<String, Object> response = new HashMap<>();
@@ -98,7 +106,7 @@ public class PictureHandlerService {
       Path path = Paths.get(uploadDir, pictureName);
       picture.transferTo(path);
 
-      String imageUrl = generatePictureServerAdress(pictureName);
+      String imageUrl = generatePictureServerAddress(pictureName);
 
       response.put(SUCCESS, true);
       response.put(URL, imageUrl);

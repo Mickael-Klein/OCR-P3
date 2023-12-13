@@ -5,10 +5,10 @@ import com.chatop.chatopApiModel.Rental;
 import com.chatop.chatopApiService.JWTService;
 import com.chatop.chatopApiService.MessageService;
 import com.chatop.chatopApiService.RentalService;
+import com.chatop.utils.EntityAndDTOCreation.EntityAndDTOCreationService;
 import com.chatop.utils.ReqResModelsAndServices.Request.MessageRequestModel;
 import com.chatop.utils.ReqResModelsAndServices.Response.MessageResponseService;
 import jakarta.validation.Valid;
-import java.time.LocalDateTime;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,6 +34,9 @@ public class MessageController {
 
   @Autowired
   private MessageResponseService messageResponseService;
+
+  @Autowired
+  private EntityAndDTOCreationService entityAndDTOCreationService;
 
   @PostMapping("/api/messages")
   public ResponseEntity<Object> sendMessage(
@@ -68,15 +71,11 @@ public class MessageController {
           .body(messageResponseService.getInvalidRentalIdJsonString());
       }
 
-      Message messageToSave = new Message();
-
-      messageToSave.setMessage(request.getMessage());
-      messageToSave.setUser_id(request.getUser_id());
-      messageToSave.setRental_id(request.getRental_id());
-      messageToSave.setCreated_at(LocalDateTime.now());
-      messageToSave.setUpdated_at(LocalDateTime.now());
-
+      Message messageToSave = entityAndDTOCreationService.getFactoryMessageEntity(
+        request
+      );
       messageService.saveMessage(messageToSave);
+
       return ResponseEntity
         .ok()
         .body(messageResponseService.getMessageSentWithSuccessJsonString());

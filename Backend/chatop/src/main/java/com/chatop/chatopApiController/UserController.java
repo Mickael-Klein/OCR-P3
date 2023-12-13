@@ -3,6 +3,7 @@ package com.chatop.chatopApiController;
 import com.chatop.chatopApiDTO.UserDTO;
 import com.chatop.chatopApiModel.DbUser;
 import com.chatop.chatopApiService.UserService;
+import com.chatop.utils.EntityAndDTOCreation.EntityAndDTOCreationService;
 import com.chatop.utils.ReqResModelsAndServices.Response.UserResponseService;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ public class UserController {
   @Autowired
   private UserResponseService userResponseService;
 
+  @Autowired
+  private EntityAndDTOCreationService entityAndDTOCreationService;
+
   @GetMapping("/{id}")
   public ResponseEntity<Object> getUser(@PathVariable final Long id) {
     try {
@@ -33,12 +37,7 @@ public class UserController {
       }
       DbUser user = optionalUser.get();
 
-      UserDTO userDTO = new UserDTO();
-      userDTO.setId(user.getId());
-      userDTO.setName(user.getName());
-      userDTO.setEmail(user.getEmail());
-      userDTO.setCreated_at(user.getCreatedAt().toLocalDate());
-      userDTO.setUpdated_at(user.getUpdatedAt().toLocalDate());
+      UserDTO userDTO = entityAndDTOCreationService.getFactoryUserDTO(user);
 
       return ResponseEntity.ok().body(userDTO);
     } catch (Exception e) {

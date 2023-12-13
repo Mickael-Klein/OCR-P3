@@ -1,5 +1,6 @@
 package com.chatop.chatopApiService;
 
+import com.chatop.utils.Interface.ChatopApiServiceInterface.JWTServiceInterface;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
@@ -12,7 +13,7 @@ import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Service;
 
 @Service
-public class JWTService {
+public class JWTService implements JWTServiceInterface {
 
   private JwtEncoder jwtEncoder;
   private JwtDecoder jwtDecoder;
@@ -22,6 +23,7 @@ public class JWTService {
     this.jwtDecoder = jwtDecoder;
   }
 
+  @Override
   public String generateToken(Long id) {
     String idToString = String.valueOf(id);
     Instant now = Instant.now();
@@ -39,14 +41,17 @@ public class JWTService {
     return this.jwtEncoder.encode(jwtEncoderParameters).getTokenValue();
   }
 
+  @Override
   public Jwt decodeToken(String token) {
     return jwtDecoder.decode(token);
   }
 
+  @Override
   public Long getUserIdFromJwtLong(Jwt jwt) {
     return Long.parseLong(jwt.getSubject());
   }
 
+  @Override
   public Boolean areUserIdMatching(
     Long userIdFromJwt,
     Long userIdFromRequestPayload

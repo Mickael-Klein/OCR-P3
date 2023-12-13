@@ -5,12 +5,11 @@ import com.chatop.chatopApiModel.Rental;
 import com.chatop.chatopApiService.JWTService;
 import com.chatop.chatopApiService.RentalService;
 import com.chatop.utils.Common.PictureHandlerService;
-import com.chatop.utils.Common.UrlGeneratorService;
+import com.chatop.utils.EntityAndDTOCreation.EntityAndDTOCreationService;
 import com.chatop.utils.ReqResModelsAndServices.Request.AddRentalRequestModel;
 import com.chatop.utils.ReqResModelsAndServices.Request.PutRentalRequestModel;
 import com.chatop.utils.ReqResModelsAndServices.Response.RentalResponseService;
 import jakarta.validation.Valid;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -39,13 +38,13 @@ public class RentalController {
   private RentalResponseService rentalResponseService;
 
   @Autowired
-  private UrlGeneratorService urlGeneratorService;
-
-  @Autowired
   private JWTService jwtService;
 
   @Autowired
   private PictureHandlerService pictureHandlerService;
+
+  @Autowired
+  private EntityAndDTOCreationService entityAndDTOCreationService;
 
   @GetMapping("/rentals")
   public ResponseEntity<Object> getAllRentals() {
@@ -53,19 +52,9 @@ public class RentalController {
       Iterable<Rental> rentals = rentalService.getAllRentals();
       List<RentalsDTO> rentalsListToSend = new ArrayList<>();
       for (Rental rental : rentals) {
-        RentalsDTO rentalsDTO = new RentalsDTO();
-        rentalsDTO.setId(rental.getId());
-        rentalsDTO.setName(rental.getName());
-        rentalsDTO.setSurface(rental.getSurface());
-        rentalsDTO.setPrice(rental.getPrice());
-        rentalsDTO.setPicture(
-          urlGeneratorService.getFinalClientUrl(rental.getPicture())
+        RentalsDTO rentalsDTO = entityAndDTOCreationService.getFactoryRentalsDTO(
+          rental
         );
-        rentalsDTO.setDescription(rental.getDescription());
-        rentalsDTO.setOwner_id(rental.getOwnerId());
-        rentalsDTO.setCreated_at(rental.getCreatedAt().toLocalDate());
-        rentalsDTO.setUpdated_at(rental.getUpdatedAt().toLocalDate());
-
         rentalsListToSend.add(rentalsDTO);
       }
 
@@ -91,18 +80,9 @@ public class RentalController {
           );
       }
       Rental rental = optionalRental.get();
-      RentalsDTO rentalDTO = new RentalsDTO();
-      rentalDTO.setId(rental.getId());
-      rentalDTO.setName(rental.getName());
-      rentalDTO.setSurface(rental.getSurface());
-      rentalDTO.setPrice(rental.getPrice());
-      rentalDTO.setPicture(
-        urlGeneratorService.getFinalClientUrl(rental.getPicture())
+      RentalsDTO rentalDTO = entityAndDTOCreationService.getFactoryRentalsDTO(
+        rental
       );
-      rentalDTO.setDescription(rental.getDescription());
-      rentalDTO.setOwner_id(rental.getOwnerId());
-      rentalDTO.setCreated_at(rental.getCreatedAt().toLocalDate());
-      rentalDTO.setUpdated_at(rental.getUpdatedAt().toLocalDate());
 
       return ResponseEntity.ok().body(rentalDTO);
     } catch (Exception e) {
@@ -128,7 +108,7 @@ public class RentalController {
           .body(rentalResponseService.getIncorrectRentalDataJsonString());
       }
 
-      Map<String, Object> pictureHandlerServiceResponse = pictureHandlerService.savePictureInServerAndReturnServerAdressOrError(
+      Map<String, Object> pictureHandlerServiceResponse = pictureHandlerService.savePictureInServerAndReturnServerAddressOrError(
         addRentalRequest.getPicture()
       );
       Boolean isPictureHandlingSuccess = (Boolean) pictureHandlerServiceResponse.get(
@@ -137,25 +117,21 @@ public class RentalController {
       if (!isPictureHandlingSuccess) {
         // Suppressing the warning because the service ensures that "error" is of type ResponseEntity
         @SuppressWarnings("unchecked")
-        ResponseEntity<Object> response = (ResponseEntity<Object>) pictureHandlerServiceResponse.get(
+        ResponseEntity<Object> errorResponse = (ResponseEntity<Object>) pictureHandlerServiceResponse.get(
           pictureHandlerService.getErrorConstant()
         );
-        return response;
+        return errorResponse;
       }
 
       String imageUrl = (String) pictureHandlerServiceResponse.get(
         pictureHandlerService.getUrlConstant()
       );
 
-      Rental rentalToSave = new Rental();
-      rentalToSave.setName(addRentalRequest.getName());
-      rentalToSave.setSurface(addRentalRequest.getSurface());
-      rentalToSave.setPrice(addRentalRequest.getPrice());
-      rentalToSave.setPicture(imageUrl);
-      rentalToSave.setDescription(addRentalRequest.getDescription());
-      rentalToSave.setCreatedAt(LocalDateTime.now());
-      rentalToSave.setUpdatedAt(LocalDateTime.now());
-      rentalToSave.setOwnerId(userId);
+      Rental rentalToSave = entityAndDTOCreationService.getFactoryRentalPostEntity(
+        userId,
+        imageUrl,
+        addRentalRequest
+      );
 
       rentalService.saveRental(rentalToSave);
       return ResponseEntity
@@ -206,13 +182,12 @@ public class RentalController {
           );
       }
 
-      rental.setName(putRentalRequest.getName());
-      rental.setSurface(putRentalRequest.getSurface());
-      rental.setPrice(putRentalRequest.getPrice());
-      rental.setDescription(putRentalRequest.getDescription());
-      rental.setUpdatedAt(LocalDateTime.now());
+      Rental updatedRental = entityAndDTOCreationService.getFactoryRentalPutEntity(
+        rental,
+        putRentalRequest
+      );
 
-      rentalService.saveRental(rental);
+      rentalService.saveRental(updatedRental);
 
       return ResponseEntity
         .ok()
