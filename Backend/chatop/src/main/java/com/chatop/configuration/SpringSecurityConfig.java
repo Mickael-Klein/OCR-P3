@@ -46,12 +46,7 @@ public class SpringSecurityConfig {
           .requestMatchers(
             "/api/auth/login",
             "/api/auth/register",
-            "/rentalPictures/**",
-            "/v2/api-docs", // Swagger endpoints
-            "/swagger-resources/**",
-            "/swagger-ui.html",
-            "/webjars/**",
-            "/swagger.json"
+            "/rentalPictures/**"
           )
           .permitAll()
           .anyRequest()
