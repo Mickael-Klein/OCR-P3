@@ -1,18 +1,19 @@
-package com.chatop.utils.ResponseService;
+package com.chatop.utils.ResponseComponent;
 
-import com.chatop.Interface.UtilResponseInterface.RentalResponseServiceInterface;
+import com.chatop.Interface.UtilResponseInterface.RentalResponseComponentInterface;
 import com.chatop.chatopApiDTO.RentalsDTO;
 import com.nimbusds.jose.shaded.gson.JsonObject;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 /**
- * Service for handling rental response related operations.
+ * Component for handling rental response related operations.
  */
-@Service
-public class RentalResponseService implements RentalResponseServiceInterface {
+@Component
+public class RentalResponseComponent
+  implements RentalResponseComponentInterface {
 
   private static final String MESSAGE_TITLE = "message";
   private static final String RENTALS_TITLE = "rentals";

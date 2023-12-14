@@ -1,13 +1,13 @@
 package com.chatop.utils.Common;
 
-import com.chatop.Interface.UtilCommonInterface.UrlGeneratorServiceInterface;
-import org.springframework.stereotype.Service;
+import com.chatop.Interface.UtilCommonInterface.UrlGeneratorComponentInterface;
+import org.springframework.stereotype.Component;
 
 /**
- * Service for generating URLs.
+ * Component for generating URLs.
  */
-@Service
-public class UrlGeneratorService implements UrlGeneratorServiceInterface {
+@Component
+public class UrlGeneratorComponent implements UrlGeneratorComponentInterface {
 
   private static final String BASE_URL = "http://localhost:3001";
 

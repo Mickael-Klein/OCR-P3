@@ -1,14 +1,15 @@
-package com.chatop.utils.ResponseService;
+package com.chatop.utils.ResponseComponent;
 
-import com.chatop.Interface.UtilResponseInterface.MessageResponseServiceInterface;
+import com.chatop.Interface.UtilResponseInterface.MessageResponseComponentInterface;
 import com.nimbusds.jose.shaded.gson.JsonObject;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 /**
- * Service for handling message response related operations.
+ * Component for handling message response related operations.
  */
-@Service
-public class MessageResponseService implements MessageResponseServiceInterface {
+@Component
+public class MessageResponseComponent
+  implements MessageResponseComponentInterface {
 
   private static final String MESSAGE_TITLE = "message";
   private static final String INVALID_MESSAGE_REQUEST =

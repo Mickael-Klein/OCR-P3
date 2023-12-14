@@ -4,13 +4,12 @@ import com.chatop.chatopApiDTO.UserDTO;
 import com.chatop.chatopApiModel.DbUser;
 import com.chatop.chatopApiService.JWTService;
 import com.chatop.chatopApiService.UserService;
-import com.chatop.utils.EntityAndDTOCreation.EntityAndDTOCreationService;
+import com.chatop.utils.EntityAndDTOCreation.EntityAndDTOCreationComponent;
 import com.chatop.utils.RequestModel.LoginRequestModel;
 import com.chatop.utils.RequestModel.RegisterRequestModel;
-import com.chatop.utils.ResponseService.UserResponseService;
+import com.chatop.utils.ResponseComponent.UserResponseComponent;
 import com.chatop.utils.SwaggerApiResponse.SwaggerApiJWTTokenResponseModel;
 import com.chatop.utils.SwaggerApiResponse.SwaggerApiMessageResponseModel;
-import com.chatop.utils.SwaggerApiResponse.SwaggerApiRentalListResponseModel;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -41,10 +40,10 @@ public class UserAuthController {
   private JWTService jwtService;
 
   @Autowired
-  UserResponseService userResponseService;
+  UserResponseComponent userResponseComponent;
 
   @Autowired
-  EntityAndDTOCreationService entityAndDTOCreationService;
+  EntityAndDTOCreationComponent entityAndDTOCreationComponent;
 
   /**
    * Constructs a new UserAuthController with the specified JWTService.
@@ -112,7 +111,7 @@ public class UserAuthController {
       if (isRequestPayloadInvalid) {
         return ResponseEntity
           .badRequest()
-          .body(userResponseService.getRegisteringBadCredentialsJsonString());
+          .body(userResponseComponent.getRegisteringBadCredentialsJsonString());
       }
 
       Boolean emailAlreadyRegistered = userService.isEmailAlreadyUsed(
@@ -121,10 +120,12 @@ public class UserAuthController {
       if (emailAlreadyRegistered) {
         return ResponseEntity
           .badRequest()
-          .body(userResponseService.getRegisteringEmailAlreadyUsedJsonString());
+          .body(
+            userResponseComponent.getRegisteringEmailAlreadyUsedJsonString()
+          );
       }
 
-      DbUser factoryUser = entityAndDTOCreationService.getFactoryUserRegisterEntity(
+      DbUser factoryUser = entityAndDTOCreationComponent.getFactoryUserRegisterEntity(
         registerRequestUser
       );
       DbUser user = userService.saveUser(factoryUser);
@@ -133,11 +134,11 @@ public class UserAuthController {
 
       return ResponseEntity
         .ok()
-        .body(userResponseService.getJwtTokenJsonString(jwtToken));
+        .body(userResponseComponent.getJwtTokenJsonString(jwtToken));
     } catch (Exception e) {
       return ResponseEntity
         .badRequest()
-        .body(userResponseService.getRegisteringErrorJsonString());
+        .body(userResponseComponent.getRegisteringErrorJsonString());
     }
   }
 
@@ -213,18 +214,18 @@ public class UserAuthController {
 
       return ResponseEntity
         .ok()
-        .body(userResponseService.getJwtTokenJsonString(jwtToken));
+        .body(userResponseComponent.getJwtTokenJsonString(jwtToken));
     } catch (Exception e) {
       return ResponseEntity
         .badRequest()
-        .body(userResponseService.getLoginErrorJsonString());
+        .body(userResponseComponent.getLoginErrorJsonString());
     }
   }
 
   private ResponseEntity<Object> handleInvalidCredentials() {
     return ResponseEntity
       .badRequest()
-      .body(userResponseService.getLoginBadCredentialsJsonString());
+      .body(userResponseComponent.getLoginBadCredentialsJsonString());
   }
 
   @ApiResponses(
@@ -286,17 +287,17 @@ public class UserAuthController {
       if (!optionalUser.isPresent()) {
         return ResponseEntity
           .badRequest()
-          .body(userResponseService.getJwtInvalidJwtJsonString());
+          .body(userResponseComponent.getJwtInvalidJwtJsonString());
       }
       DbUser user = optionalUser.get();
 
-      UserDTO userDTO = entityAndDTOCreationService.getFactoryUserDTO(user);
+      UserDTO userDTO = entityAndDTOCreationComponent.getFactoryUserDTO(user);
 
       return ResponseEntity.ok().body(userDTO);
     } catch (Exception e) {
       return ResponseEntity
         .badRequest()
-        .body(userResponseService.getJwtInvalidJwtJsonString());
+        .body(userResponseComponent.getJwtInvalidJwtJsonString());
     }
   }
 }

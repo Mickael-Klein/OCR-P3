@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Interface for rental response service operations.
+ * Interface for rental response component operations.
  */
-public interface RentalResponseServiceInterface {
+public interface RentalResponseComponentInterface {
   /**
    * Creates a JSON object representing a message.
    *

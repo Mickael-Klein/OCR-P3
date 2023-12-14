@@ -11,9 +11,9 @@ import com.chatop.utils.RequestModel.PutRentalRequestModel;
 import com.chatop.utils.RequestModel.RegisterRequestModel;
 
 /**
- * Interface for entity and DTO creation service operations.
+ * Interface for entity and DTO creation component operations.
  */
-public interface EntityAndDTOCreationServiceInterface {
+public interface EntityAndDTOCreationComponentInterface {
   /**
    * Creates a message entity based on the provided message request model.
    *

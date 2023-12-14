@@ -1,7 +1,7 @@
 package com.chatop.utils.Common;
 
-import com.chatop.Interface.UtilCommonInterface.PictureHandlerServiceInterface;
-import com.chatop.utils.ResponseService.RentalResponseService;
+import com.chatop.Interface.UtilCommonInterface.PictureHandlerComponentInterface;
+import com.chatop.utils.ResponseComponent.RentalResponseComponent;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -13,20 +13,21 @@ import javax.imageio.ImageIO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
- * Service for handling picture-related operations.
+ * Component for handling picture-related operations.
  */
-@Service
-public class PictureHandlerService implements PictureHandlerServiceInterface {
+@Component
+public class PictureHandlerComponent
+  implements PictureHandlerComponentInterface {
 
   @Value("${upload-dir}")
   private String uploadDir;
 
   @Autowired
-  private RentalResponseService rentalResponseService;
+  private RentalResponseComponent rentalResponseService;
 
   private static final String SUCCESS = "success";
   private static final String URL = "url";

@@ -3,9 +3,9 @@ package com.chatop.Interface.UtilResponseInterface;
 import com.nimbusds.jose.shaded.gson.JsonObject;
 
 /**
- * Interface for user response service operations.
+ * Interface for user response component operations.
  */
-public interface UserResponseServiceInterface {
+public interface UserResponseComponentInterface {
   /**
    * Creates a JSON object representing a message.
    *

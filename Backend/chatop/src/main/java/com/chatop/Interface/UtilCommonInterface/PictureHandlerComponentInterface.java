@@ -5,9 +5,9 @@ import java.util.Map;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
- * Interface for picture handling service operations.
+ * Interface for picture handling component operations.
  */
-public interface PictureHandlerServiceInterface {
+public interface PictureHandlerComponentInterface {
   /**
    * Gets the constant representing a successful operation.
    *

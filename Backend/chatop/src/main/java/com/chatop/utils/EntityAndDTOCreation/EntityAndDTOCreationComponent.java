@@ -1,6 +1,6 @@
 package com.chatop.utils.EntityAndDTOCreation;
 
-import com.chatop.Interface.UtilEntityAndDTOCreationInterface.EntityAndDTOCreationServiceInterface;
+import com.chatop.Interface.UtilEntityAndDTOCreationInterface.EntityAndDTOCreationComponentInterface;
 import com.chatop.chatopApiDTO.RentalsDTO;
 import com.chatop.chatopApiDTO.UserDTO;
 import com.chatop.chatopApiModel.DbUser;
@@ -14,14 +14,14 @@ import com.chatop.utils.RequestModel.MessageRequestModel;
 import com.chatop.utils.RequestModel.PutRentalRequestModel;
 import com.chatop.utils.RequestModel.RegisterRequestModel;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 /**
- * Service for creating entities and DTOs using various factories.
+ * Component for creating entities and DTOs using various factories.
  */
-@Service
-public class EntityAndDTOCreationService
-  implements EntityAndDTOCreationServiceInterface {
+@Component
+public class EntityAndDTOCreationComponent
+  implements EntityAndDTOCreationComponentInterface {
 
   @Autowired
   MessageFactory messageFactory;
