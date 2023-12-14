@@ -8,6 +8,15 @@ import com.chatop.utils.EntityAndDTOCreation.EntityAndDTOCreationService;
 import com.chatop.utils.ReqResModelsAndServices.Request.LoginRequestModel;
 import com.chatop.utils.ReqResModelsAndServices.Request.RegisterRequestModel;
 import com.chatop.utils.ReqResModelsAndServices.Response.UserResponseService;
+import com.chatop.utils.SwaggerApiResponse.SwaggerApiJWTTokenResponseModel;
+import com.chatop.utils.SwaggerApiResponse.SwaggerApiMessageResponseModel;
+import com.chatop.utils.SwaggerApiResponse.SwaggerApiRentalListResponseModel;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,10 +46,62 @@ public class UserAuthController {
   @Autowired
   EntityAndDTOCreationService entityAndDTOCreationService;
 
+  /**
+   * Constructs a new UserAuthController with the specified JWTService.
+   *
+   * @param jwtService The JWTService instance.
+   */
   public UserAuthController(JWTService jwtService) {
     this.jwtService = jwtService;
   }
 
+  /**
+   * Registers a new user account.
+   *
+   * @param registerRequestUser The registration request payload.
+   * @param bindingResult       The result of the request payload validation.
+   * @return ResponseEntity containing the result of the registration operation.
+   */
+  @ApiResponses(
+    value = {
+      @ApiResponse(
+        responseCode = "200",
+        description = "Registering user success",
+        content = {
+          @Content(
+            mediaType = "application/json",
+            schema = @Schema(
+              implementation = SwaggerApiJWTTokenResponseModel.class
+            )
+          ),
+        }
+      ),
+      @ApiResponse(
+        responseCode = "400",
+        description = "Bad request, incorrect registering datas",
+        content = {
+          @Content(
+            mediaType = "application/json",
+            schema = @Schema(
+              implementation = SwaggerApiMessageResponseModel.class
+            )
+          ),
+        }
+      ),
+      @ApiResponse(
+        responseCode = "500",
+        description = "Internal Server Error",
+        content = {
+          @Content(
+            mediaType = "application/json",
+            schema = @Schema(
+              implementation = SwaggerApiMessageResponseModel.class
+            )
+          ),
+        }
+      ),
+    }
+  )
   @PostMapping("/register")
   public ResponseEntity<Object> registerAccount(
     @Valid @RequestBody RegisterRequestModel registerRequestUser,
@@ -80,6 +141,46 @@ public class UserAuthController {
     }
   }
 
+  @ApiResponses(
+    value = {
+      @ApiResponse(
+        responseCode = "200",
+        description = "Login success",
+        content = {
+          @Content(
+            mediaType = "application/json",
+            schema = @Schema(
+              implementation = SwaggerApiJWTTokenResponseModel.class
+            )
+          ),
+        }
+      ),
+      @ApiResponse(
+        responseCode = "400",
+        description = "Bad request, wrong credentials",
+        content = {
+          @Content(
+            mediaType = "application/json",
+            schema = @Schema(
+              implementation = SwaggerApiMessageResponseModel.class
+            )
+          ),
+        }
+      ),
+      @ApiResponse(
+        responseCode = "500",
+        description = "Internal Server Error",
+        content = {
+          @Content(
+            mediaType = "application/json",
+            schema = @Schema(
+              implementation = SwaggerApiMessageResponseModel.class
+            )
+          ),
+        }
+      ),
+    }
+  )
   @PostMapping("/login")
   public ResponseEntity<Object> login(
     @Valid @RequestBody LoginRequestModel request,
@@ -126,6 +227,57 @@ public class UserAuthController {
       .body(userResponseService.getLoginBadCredentialsJsonString());
   }
 
+  @ApiResponses(
+    value = {
+      @ApiResponse(
+        responseCode = "200",
+        description = "Get user success",
+        content = {
+          @Content(
+            mediaType = "application/json",
+            schema = @Schema(implementation = UserDTO.class)
+          ),
+        }
+      ),
+      @ApiResponse(
+        responseCode = "400",
+        description = "Bad request, user not retrieve with jwt provided",
+        content = {
+          @Content(
+            mediaType = "application/json",
+            schema = @Schema(
+              implementation = SwaggerApiMessageResponseModel.class
+            )
+          ),
+        }
+      ),
+      @ApiResponse(
+        responseCode = "401",
+        description = "Unauthorize",
+        content = {
+          @Content(
+            mediaType = "application/json",
+            schema = @Schema(
+              implementation = SwaggerApiMessageResponseModel.class
+            )
+          ),
+        }
+      ),
+      @ApiResponse(
+        responseCode = "500",
+        description = "Internal Server Error",
+        content = {
+          @Content(
+            mediaType = "application/json",
+            schema = @Schema(
+              implementation = SwaggerApiMessageResponseModel.class
+            )
+          ),
+        }
+      ),
+    }
+  )
+  @Operation(security = { @SecurityRequirement(name = "bearer-key") })
   @GetMapping("/me")
   public ResponseEntity<Object> getMe(@AuthenticationPrincipal Jwt jwt) {
     try {

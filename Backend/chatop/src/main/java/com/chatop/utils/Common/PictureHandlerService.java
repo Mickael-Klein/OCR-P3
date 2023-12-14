@@ -16,6 +16,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+/**
+ * Service for handling picture-related operations.
+ */
 @Service
 public class PictureHandlerService implements PictureHandlerServiceInterface {
 
@@ -30,52 +33,98 @@ public class PictureHandlerService implements PictureHandlerServiceInterface {
   private static final String ERROR = "error";
   private static final String RENTAL_PICTURES_DIRECTORY = "/rentalPictures/";
 
+  /**
+   * Gets the success constant.
+   *
+   * @return The success constant.
+   */
   @Override
   public String getSuccessConstant() {
     return SUCCESS;
   }
 
+  /**
+   * Gets the URL constant.
+   *
+   * @return The URL constant.
+   */
   @Override
   public String getUrlConstant() {
     return URL;
   }
 
+  /**
+   * Gets the error constant.
+   *
+   * @return The error constant.
+   */
   @Override
   public String getErrorConstant() {
     return ERROR;
   }
 
+  /**
+   * Generates a unique picture name based on the original filename and the current timestamp.
+   *
+   * @param pictureName The original filename of the picture.
+   * @return The generated unique picture name.
+   */
   @Override
   public String generatePictureName(String pictureName) {
     String name = System.currentTimeMillis() + "_" + pictureName;
     return name;
   }
 
+  /**
+   * Generates the server address for a picture based on its name.
+   *
+   * @param pictureName The name of the picture.
+   * @return The generated server address for the picture.
+   */
   @Override
   public String generatePictureServerAddress(String pictureName) {
     String url = RENTAL_PICTURES_DIRECTORY + pictureName;
     return url;
   }
 
+  /**
+   * Gets the server address for a picture based on its name.
+   *
+   * @param pictureName The name of the picture.
+   * @return The server address for the picture.
+   */
   @Override
   public String getPictureServerAddress(String pictureName) {
     String fullPictureName = generatePictureName(pictureName);
     return generatePictureServerAddress(fullPictureName);
   }
 
+  /**
+   * Checks if the provided bytes represent an image.
+   *
+   * @param bytes The byte array representing the image.
+   * @return True if the bytes represent an image, false otherwise.
+   */
   private Boolean isImage(byte[] bytes) {
     try (ByteArrayInputStream bis = new ByteArrayInputStream(bytes)) {
       BufferedImage image = ImageIO.read(bis);
       return image != null;
-    } catch (Exception e) {
+    } catch (IOException e) {
       return false;
     }
   }
 
+  /**
+   * Saves a picture in the server and returns the server address or an error response.
+   *
+   * @param picture The MultipartFile representing the picture to be saved.
+   * @return A Map containing the success status, server URL, or error response.
+   * @throws IOException If an I/O error occurs during picture handling.
+   */
   @Override
   public Map<String, Object> savePictureInServerAndReturnServerAddressOrError(
     MultipartFile picture
-  ) throws IOException { // déclarez que la méthode peut lancer une IOException
+  ) throws IOException {
     Map<String, Object> response = new HashMap<>();
 
     try {

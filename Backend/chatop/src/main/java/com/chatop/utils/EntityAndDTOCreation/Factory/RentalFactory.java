@@ -10,12 +10,23 @@ import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * Factory component for creating Rental entities and DTOs.
+ */
 @Component
 public class RentalFactory implements RentalFactoryInterface {
 
   @Autowired
   private UrlGeneratorService urlGeneratorService;
 
+  /**
+   * Creates a Rental entity for posting based on the provided information.
+   *
+   * @param userId               The ID of the user creating the rental.
+   * @param imageUrl             The URL of the rental picture.
+   * @param postRentalRequest    The AddRentalRequestModel containing information for creating the Rental.
+   * @return The created Rental entity.
+   */
   @Override
   public Rental getPostRentalEntity(
     Long userId,
@@ -35,6 +46,13 @@ public class RentalFactory implements RentalFactoryInterface {
     return rentalToSave;
   }
 
+  /**
+   * Creates a Rental entity for updating based on the provided information.
+   *
+   * @param currentRental        The current state of the rental.
+   * @param putRentalRequest     The PutRentalRequestModel containing information for updating the Rental.
+   * @return The updated Rental entity.
+   */
   @Override
   public Rental getPutRentalEntity(
     Rental currentRental,
@@ -49,6 +67,12 @@ public class RentalFactory implements RentalFactoryInterface {
     return currentRental;
   }
 
+  /**
+   * Creates a RentalsDTO based on the provided Rental entity.
+   *
+   * @param rental The Rental entity.
+   * @return The created RentalsDTO.
+   */
   @Override
   public RentalsDTO getRentalsDTO(Rental rental) {
     RentalsDTO rentalsDTO = new RentalsDTO();

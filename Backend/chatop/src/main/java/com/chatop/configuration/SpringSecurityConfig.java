@@ -20,6 +20,9 @@ import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+/**
+ * Configuration class for Spring Security.
+ */
 @Configuration
 @EnableWebSecurity
 public class SpringSecurityConfig {
@@ -30,6 +33,13 @@ public class SpringSecurityConfig {
   @Autowired
   private CustomUserDetailsService customUserDetailsService;
 
+  /**
+   * Configures the security filter chain for the application.
+   *
+   * @param http The HttpSecurity object to configure.
+   * @return The configured SecurityFilterChain.
+   * @throws Exception If an error occurs during configuration.
+   */
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http)
     throws Exception {
@@ -46,7 +56,10 @@ public class SpringSecurityConfig {
           .requestMatchers(
             "/api/auth/login",
             "/api/auth/register",
-            "/rentalPictures/**"
+            "/rentalPictures/**",
+            "/v3/api-docs/**", // Endpoint OpenAPI
+            "/swagger-ui.html", // Swagger UI
+            "/swagger-ui/**"
           )
           .permitAll()
           .anyRequest()
@@ -55,6 +68,11 @@ public class SpringSecurityConfig {
       .build();
   }
 
+  /**
+   * Configures the JwtDecoder bean for JWT token decoding.
+   *
+   * @return The configured JwtDecoder.
+   */
   @Bean
   public JwtDecoder jwtDecoder() {
     SecretKeySpec secretKey = new SecretKeySpec(
@@ -69,16 +87,34 @@ public class SpringSecurityConfig {
       .build();
   }
 
+  /**
+   * Configures the JwtEncoder bean for JWT token encoding.
+   *
+   * @return The configured JwtEncoder.
+   */
   @Bean
   public JwtEncoder jwtEncoder() {
     return new NimbusJwtEncoder(new ImmutableSecret<>(this.jwtKey.getBytes()));
   }
 
+  /**
+   * Configures the BCryptPasswordEncoder bean for password encoding.
+   *
+   * @return The configured BCryptPasswordEncoder.
+   */
   @Bean
   public BCryptPasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
   }
 
+  /**
+   * Configures the AuthenticationManager bean.
+   *
+   * @param http                  The HttpSecurity object to configure.
+   * @param bCryptPasswordEncoder The BCryptPasswordEncoder used for password encoding.
+   * @return The configured AuthenticationManager.
+   * @throws Exception If an error occurs during configuration.
+   */
   @Bean
   public AuthenticationManager authenticationManager(
     HttpSecurity http,

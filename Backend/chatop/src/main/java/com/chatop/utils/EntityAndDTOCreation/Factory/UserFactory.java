@@ -9,12 +9,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+/**
+ * Factory component for creating User entities and DTOs.
+ */
 @Component
 public class UserFactory implements UserFactoryInterface {
 
   @Autowired
   private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+  /**
+   * Creates a User entity for user registration based on the provided information.
+   *
+   * @param registerRequestUser The RegisterRequestModel containing information for creating the User.
+   * @return The created User entity.
+   */
   @Override
   public DbUser getPostUserEntity(RegisterRequestModel registerRequestUser) {
     LocalDateTime now = LocalDateTime.now();
@@ -31,6 +40,12 @@ public class UserFactory implements UserFactoryInterface {
     return user;
   }
 
+  /**
+   * Creates a UserDTO based on the provided User entity.
+   *
+   * @param user The User entity.
+   * @return The created UserDTO.
+   */
   @Override
   public UserDTO getUserDTO(DbUser user) {
     UserDTO userDTO = new UserDTO();

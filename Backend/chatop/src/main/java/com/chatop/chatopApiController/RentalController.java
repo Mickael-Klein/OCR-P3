@@ -9,6 +9,14 @@ import com.chatop.utils.EntityAndDTOCreation.EntityAndDTOCreationService;
 import com.chatop.utils.ReqResModelsAndServices.Request.AddRentalRequestModel;
 import com.chatop.utils.ReqResModelsAndServices.Request.PutRentalRequestModel;
 import com.chatop.utils.ReqResModelsAndServices.Response.RentalResponseService;
+import com.chatop.utils.SwaggerApiResponse.SwaggerApiMessageResponseModel;
+import com.chatop.utils.SwaggerApiResponse.SwaggerApiRentalListResponseModel;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +35,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Controller handling rental-related operations.
+ * Provides endpoints for retrieving, adding, and updating rental information.
+ */
 @RestController
 @RequestMapping("/api")
 public class RentalController {
@@ -46,6 +58,52 @@ public class RentalController {
   @Autowired
   private EntityAndDTOCreationService entityAndDTOCreationService;
 
+  /**
+   * Retrieves all rentals.
+   *
+   * @return ResponseEntity<Object> containing a list of RentalsDTO representing all rentals
+   */
+  @ApiResponses(
+    value = {
+      @ApiResponse(
+        responseCode = "200",
+        description = "Get rentals successfully",
+        content = {
+          @Content(
+            mediaType = "application/json",
+            schema = @Schema(
+              implementation = SwaggerApiRentalListResponseModel.class
+            )
+          ),
+        }
+      ),
+      @ApiResponse(
+        responseCode = "401",
+        description = "Unauthorize",
+        content = {
+          @Content(
+            mediaType = "application/json",
+            schema = @Schema(
+              implementation = SwaggerApiMessageResponseModel.class
+            )
+          ),
+        }
+      ),
+      @ApiResponse(
+        responseCode = "500",
+        description = "Internal Server Error",
+        content = {
+          @Content(
+            mediaType = "application/json",
+            schema = @Schema(
+              implementation = SwaggerApiMessageResponseModel.class
+            )
+          ),
+        }
+      ),
+    }
+  )
+  @Operation(security = { @SecurityRequirement(name = "bearer-key") })
   @GetMapping("/rentals")
   public ResponseEntity<Object> getAllRentals() {
     try {
@@ -68,6 +126,63 @@ public class RentalController {
     }
   }
 
+  /**
+   * Retrieves a specific rental based on the provided ID.
+   *
+   * @param id The ID of the rental to retrieve.
+   * @return ResponseEntity<Object> containing the RentalsDTO representing the requested rental
+   */
+  @ApiResponses(
+    value = {
+      @ApiResponse(
+        responseCode = "200",
+        description = "Get rental by id successfully",
+        content = {
+          @Content(
+            mediaType = "application/json",
+            schema = @Schema(implementation = RentalsDTO.class)
+          ),
+        }
+      ),
+      @ApiResponse(
+        responseCode = "400",
+        description = "Bad Request, rental not found",
+        content = {
+          @Content(
+            mediaType = "application/json",
+            schema = @Schema(
+              implementation = SwaggerApiMessageResponseModel.class
+            )
+          ),
+        }
+      ),
+      @ApiResponse(
+        responseCode = "401",
+        description = "Unauthorize",
+        content = {
+          @Content(
+            mediaType = "application/json",
+            schema = @Schema(
+              implementation = SwaggerApiMessageResponseModel.class
+            )
+          ),
+        }
+      ),
+      @ApiResponse(
+        responseCode = "500",
+        description = "Internal Server Error",
+        content = {
+          @Content(
+            mediaType = "application/json",
+            schema = @Schema(
+              implementation = SwaggerApiMessageResponseModel.class
+            )
+          ),
+        }
+      ),
+    }
+  )
+  @Operation(security = { @SecurityRequirement(name = "bearer-key") })
   @GetMapping("/rentals/{id}")
   public ResponseEntity<Object> getRental(@PathVariable("id") final Long id) {
     try {
@@ -92,6 +207,67 @@ public class RentalController {
     }
   }
 
+  /**
+   * Adds a new rental based on the provided request data.
+   *
+   * @param addRentalRequest  The request model containing data for creating a new rental.
+   * @param bindingResult     The result of the validation process for the request payload.
+   * @param jwt               The authentication token obtained from the request header.
+   * @return ResponseEntity<Object> containing the result of the rental creation operation
+   */
+  @ApiResponses(
+    value = {
+      @ApiResponse(
+        responseCode = "200",
+        description = "Rental added successfully",
+        content = {
+          @Content(
+            mediaType = "application/json",
+            schema = @Schema(
+              implementation = SwaggerApiMessageResponseModel.class
+            )
+          ),
+        }
+      ),
+      @ApiResponse(
+        responseCode = "400",
+        description = "Bad Request,incorrect rental datas",
+        content = {
+          @Content(
+            mediaType = "application/json",
+            schema = @Schema(
+              implementation = SwaggerApiMessageResponseModel.class
+            )
+          ),
+        }
+      ),
+      @ApiResponse(
+        responseCode = "401",
+        description = "Unauthorize",
+        content = {
+          @Content(
+            mediaType = "application/json",
+            schema = @Schema(
+              implementation = SwaggerApiMessageResponseModel.class
+            )
+          ),
+        }
+      ),
+      @ApiResponse(
+        responseCode = "500",
+        description = "Internal Server Error",
+        content = {
+          @Content(
+            mediaType = "application/json",
+            schema = @Schema(
+              implementation = SwaggerApiMessageResponseModel.class
+            )
+          ),
+        }
+      ),
+    }
+  )
+  @Operation(security = { @SecurityRequirement(name = "bearer-key") })
   @PostMapping("/rentals")
   public ResponseEntity<Object> addRental(
     @Valid @ModelAttribute AddRentalRequestModel addRentalRequest,
@@ -144,6 +320,69 @@ public class RentalController {
     }
   }
 
+  /**
+   * Updates an existing rental based on the provided request data and rental ID.
+   *
+   * @param id                The ID of the rental to update.
+   * @param putRentalRequest  The request model containing data for updating the rental.
+   * @param bindingResult     The result of the validation process for the request payload.
+   * @param jwt               The authentication token obtained from the request header.
+   * @return ResponseEntity<Object> containing the result of the rental update operation,
+   *         along with an appropriate HTTP status.
+   */
+  @ApiResponses(
+    value = {
+      @ApiResponse(
+        responseCode = "200",
+        description = "Rental updated successfully",
+        content = {
+          @Content(
+            mediaType = "application/json",
+            schema = @Schema(
+              implementation = SwaggerApiMessageResponseModel.class
+            )
+          ),
+        }
+      ),
+      @ApiResponse(
+        responseCode = "400",
+        description = "Bad Request,incorrect rental datas",
+        content = {
+          @Content(
+            mediaType = "application/json",
+            schema = @Schema(
+              implementation = SwaggerApiMessageResponseModel.class
+            )
+          ),
+        }
+      ),
+      @ApiResponse(
+        responseCode = "401",
+        description = "Unauthorize",
+        content = {
+          @Content(
+            mediaType = "application/json",
+            schema = @Schema(
+              implementation = SwaggerApiMessageResponseModel.class
+            )
+          ),
+        }
+      ),
+      @ApiResponse(
+        responseCode = "500",
+        description = "Internal Server Error",
+        content = {
+          @Content(
+            mediaType = "application/json",
+            schema = @Schema(
+              implementation = SwaggerApiMessageResponseModel.class
+            )
+          ),
+        }
+      ),
+    }
+  )
+  @Operation(security = { @SecurityRequirement(name = "bearer-key") })
   @PutMapping("/rentals/{id}")
   public ResponseEntity<Object> updateRental(
     @PathVariable final Long id,
