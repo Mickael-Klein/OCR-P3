@@ -1,5 +1,6 @@
 package com.chatop.utils.EntityAndDTOCreation;
 
+import com.chatop.Interface.UtilEntityAndDTOCreationInterface.EntityAndDTOCreationServiceInterface;
 import com.chatop.chatopApiDTO.RentalsDTO;
 import com.chatop.chatopApiDTO.UserDTO;
 import com.chatop.chatopApiModel.DbUser;
@@ -8,11 +9,10 @@ import com.chatop.chatopApiModel.Rental;
 import com.chatop.utils.EntityAndDTOCreation.Factory.MessageFactory;
 import com.chatop.utils.EntityAndDTOCreation.Factory.RentalFactory;
 import com.chatop.utils.EntityAndDTOCreation.Factory.UserFactory;
-import com.chatop.utils.Interface.EntityAndDTOCreationInterface.EntityAndDTOCreationServiceInterface;
-import com.chatop.utils.ReqResModelsAndServices.Request.AddRentalRequestModel;
-import com.chatop.utils.ReqResModelsAndServices.Request.MessageRequestModel;
-import com.chatop.utils.ReqResModelsAndServices.Request.PutRentalRequestModel;
-import com.chatop.utils.ReqResModelsAndServices.Request.RegisterRequestModel;
+import com.chatop.utils.RequestModel.AddRentalRequestModel;
+import com.chatop.utils.RequestModel.MessageRequestModel;
+import com.chatop.utils.RequestModel.PutRentalRequestModel;
+import com.chatop.utils.RequestModel.RegisterRequestModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

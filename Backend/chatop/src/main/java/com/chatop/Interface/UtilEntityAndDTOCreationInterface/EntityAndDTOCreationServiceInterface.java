@@ -1,14 +1,14 @@
-package com.chatop.utils.Interface.EntityAndDTOCreationInterface;
+package com.chatop.Interface.UtilEntityAndDTOCreationInterface;
 
 import com.chatop.chatopApiDTO.RentalsDTO;
 import com.chatop.chatopApiDTO.UserDTO;
 import com.chatop.chatopApiModel.DbUser;
 import com.chatop.chatopApiModel.Message;
 import com.chatop.chatopApiModel.Rental;
-import com.chatop.utils.ReqResModelsAndServices.Request.AddRentalRequestModel;
-import com.chatop.utils.ReqResModelsAndServices.Request.MessageRequestModel;
-import com.chatop.utils.ReqResModelsAndServices.Request.PutRentalRequestModel;
-import com.chatop.utils.ReqResModelsAndServices.Request.RegisterRequestModel;
+import com.chatop.utils.RequestModel.AddRentalRequestModel;
+import com.chatop.utils.RequestModel.MessageRequestModel;
+import com.chatop.utils.RequestModel.PutRentalRequestModel;
+import com.chatop.utils.RequestModel.RegisterRequestModel;
 
 /**
  * Interface for entity and DTO creation service operations.

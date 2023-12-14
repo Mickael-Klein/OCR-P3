@@ -1,4 +1,4 @@
-package com.chatop.utils.Interface.ResponseInterface;
+package com.chatop.Interface.UtilResponseInterface;
 
 import com.nimbusds.jose.shaded.gson.JsonObject;
 

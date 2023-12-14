@@ -1,8 +1,8 @@
 package com.chatop.utils.EntityAndDTOCreation.Factory;
 
+import com.chatop.Interface.UtilEntityAndDTOCreationInterface.FactoryInterface.MessageFactoryInterface;
 import com.chatop.chatopApiModel.Message;
-import com.chatop.utils.Interface.EntityAndDTOCreationInterface.FactoryInterface.MessageFactoryInterface;
-import com.chatop.utils.ReqResModelsAndServices.Request.MessageRequestModel;
+import com.chatop.utils.RequestModel.MessageRequestModel;
 import java.time.LocalDateTime;
 import org.springframework.stereotype.Component;
 

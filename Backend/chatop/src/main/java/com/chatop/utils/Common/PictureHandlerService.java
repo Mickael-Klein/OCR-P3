@@ -1,7 +1,7 @@
 package com.chatop.utils.Common;
 
-import com.chatop.utils.Interface.CommonInterface.PictureHandlerServiceInterface;
-import com.chatop.utils.ReqResModelsAndServices.Response.RentalResponseService;
+import com.chatop.Interface.UtilCommonInterface.PictureHandlerServiceInterface;
+import com.chatop.utils.ResponseService.RentalResponseService;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

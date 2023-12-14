@@ -1,4 +1,4 @@
-package com.chatop.utils.Interface.ChatopApiServiceInterface;
+package com.chatop.Interface.ChatopApiServiceInterface;
 
 import com.chatop.chatopApiModel.Message;
 

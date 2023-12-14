@@ -1,4 +1,4 @@
-package com.chatop.utils.ReqResModelsAndServices.Request;
+package com.chatop.utils.RequestModel;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;

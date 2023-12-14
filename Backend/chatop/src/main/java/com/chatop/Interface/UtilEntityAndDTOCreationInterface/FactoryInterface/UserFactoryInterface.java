@@ -1,8 +1,8 @@
-package com.chatop.utils.Interface.EntityAndDTOCreationInterface.FactoryInterface;
+package com.chatop.Interface.UtilEntityAndDTOCreationInterface.FactoryInterface;
 
 import com.chatop.chatopApiDTO.UserDTO;
 import com.chatop.chatopApiModel.DbUser;
-import com.chatop.utils.ReqResModelsAndServices.Request.RegisterRequestModel;
+import com.chatop.utils.RequestModel.RegisterRequestModel;
 
 /**
  * Interface for user factory operations.

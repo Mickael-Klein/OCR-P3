@@ -1,9 +1,9 @@
 package com.chatop.utils.EntityAndDTOCreation.Factory;
 
+import com.chatop.Interface.UtilEntityAndDTOCreationInterface.FactoryInterface.UserFactoryInterface;
 import com.chatop.chatopApiDTO.UserDTO;
 import com.chatop.chatopApiModel.DbUser;
-import com.chatop.utils.Interface.EntityAndDTOCreationInterface.FactoryInterface.UserFactoryInterface;
-import com.chatop.utils.ReqResModelsAndServices.Request.RegisterRequestModel;
+import com.chatop.utils.RequestModel.RegisterRequestModel;
 import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

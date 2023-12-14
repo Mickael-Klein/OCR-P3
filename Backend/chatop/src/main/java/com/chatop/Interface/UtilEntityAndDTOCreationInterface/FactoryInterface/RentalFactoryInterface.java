@@ -1,9 +1,9 @@
-package com.chatop.utils.Interface.EntityAndDTOCreationInterface.FactoryInterface;
+package com.chatop.Interface.UtilEntityAndDTOCreationInterface.FactoryInterface;
 
 import com.chatop.chatopApiDTO.RentalsDTO;
 import com.chatop.chatopApiModel.Rental;
-import com.chatop.utils.ReqResModelsAndServices.Request.AddRentalRequestModel;
-import com.chatop.utils.ReqResModelsAndServices.Request.PutRentalRequestModel;
+import com.chatop.utils.RequestModel.AddRentalRequestModel;
+import com.chatop.utils.RequestModel.PutRentalRequestModel;
 
 /**
  * Interface for rental factory operations.

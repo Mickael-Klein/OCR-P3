@@ -1,11 +1,11 @@
 package com.chatop.utils.EntityAndDTOCreation.Factory;
 
+import com.chatop.Interface.UtilEntityAndDTOCreationInterface.FactoryInterface.RentalFactoryInterface;
 import com.chatop.chatopApiDTO.RentalsDTO;
 import com.chatop.chatopApiModel.Rental;
 import com.chatop.utils.Common.UrlGeneratorService;
-import com.chatop.utils.Interface.EntityAndDTOCreationInterface.FactoryInterface.RentalFactoryInterface;
-import com.chatop.utils.ReqResModelsAndServices.Request.AddRentalRequestModel;
-import com.chatop.utils.ReqResModelsAndServices.Request.PutRentalRequestModel;
+import com.chatop.utils.RequestModel.AddRentalRequestModel;
+import com.chatop.utils.RequestModel.PutRentalRequestModel;
 import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

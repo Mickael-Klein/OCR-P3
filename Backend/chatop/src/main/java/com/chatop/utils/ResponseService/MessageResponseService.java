@@ -1,6 +1,6 @@
-package com.chatop.utils.ReqResModelsAndServices.Response;
+package com.chatop.utils.ResponseService;
 
-import com.chatop.utils.Interface.ResponseInterface.MessageResponseServiceInterface;
+import com.chatop.Interface.UtilResponseInterface.MessageResponseServiceInterface;
 import com.nimbusds.jose.shaded.gson.JsonObject;
 import org.springframework.stereotype.Service;
 

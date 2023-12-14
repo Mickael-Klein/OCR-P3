@@ -1,6 +1,6 @@
 package com.chatop.utils.Common;
 
-import com.chatop.utils.Interface.CommonInterface.UrlGeneratorServiceInterface;
+import com.chatop.Interface.UtilCommonInterface.UrlGeneratorServiceInterface;
 import org.springframework.stereotype.Service;
 
 /**

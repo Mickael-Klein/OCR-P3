@@ -1,4 +1,4 @@
-package com.chatop.utils.Interface.ChatopApiServiceInterface;
+package com.chatop.Interface.ChatopApiServiceInterface;
 
 import org.springframework.security.oauth2.jwt.Jwt;
 

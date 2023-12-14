@@ -1,4 +1,4 @@
-package com.chatop.utils.Interface.CommonInterface;
+package com.chatop.Interface.UtilCommonInterface;
 
 /**
  * Interface for URL generation service operations.
