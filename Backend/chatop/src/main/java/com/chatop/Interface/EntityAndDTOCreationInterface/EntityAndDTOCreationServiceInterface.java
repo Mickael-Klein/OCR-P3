@@ -1,4 +1,4 @@
-package com.chatop.utils.Interface.EntityAndDTOCreationInterface;
+package com.chatop.Interface.EntityAndDTOCreationInterface;
 
 import com.chatop.chatopApiDTO.RentalsDTO;
 import com.chatop.chatopApiDTO.UserDTO;

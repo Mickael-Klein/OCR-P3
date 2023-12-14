@@ -1,8 +1,8 @@
 package com.chatop.chatopApiService;
 
+import com.chatop.Interface.ChatopApiServiceInterface.RentalServiceInterface;
 import com.chatop.chatopApiModel.Rental;
 import com.chatop.chatopApiRepository.RentalRepository;
-import com.chatop.utils.Interface.ChatopApiServiceInterface.RentalServiceInterface;
 import java.util.Optional;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;

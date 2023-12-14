@@ -1,6 +1,6 @@
 package com.chatop.chatopApiService;
 
-import com.chatop.utils.Interface.ChatopApiServiceInterface.JWTServiceInterface;
+import com.chatop.Interface.ChatopApiServiceInterface.JWTServiceInterface;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;

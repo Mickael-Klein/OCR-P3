@@ -1,8 +1,8 @@
 package com.chatop.chatopApiService;
 
+import com.chatop.Interface.ChatopApiServiceInterface.UserServiceInterface;
 import com.chatop.chatopApiModel.DbUser;
 import com.chatop.chatopApiRepository.UserRepository;
-import com.chatop.utils.Interface.ChatopApiServiceInterface.UserServiceInterface;
 import java.util.Optional;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,8 +1,8 @@
 package com.chatop.utils.EntityAndDTOCreation.Factory;
 
+import com.chatop.Interface.EntityAndDTOCreationInterface.FactoryInterface.UserFactoryInterface;
 import com.chatop.chatopApiDTO.UserDTO;
 import com.chatop.chatopApiModel.DbUser;
-import com.chatop.utils.Interface.EntityAndDTOCreationInterface.FactoryInterface.UserFactoryInterface;
 import com.chatop.utils.ReqResModelsAndServices.Request.RegisterRequestModel;
 import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;

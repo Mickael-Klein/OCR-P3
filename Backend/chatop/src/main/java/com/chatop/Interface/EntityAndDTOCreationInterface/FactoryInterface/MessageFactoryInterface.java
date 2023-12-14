@@ -1,4 +1,4 @@
-package com.chatop.utils.Interface.EntityAndDTOCreationInterface.FactoryInterface;
+package com.chatop.Interface.EntityAndDTOCreationInterface.FactoryInterface;
 
 import com.chatop.chatopApiModel.Message;
 import com.chatop.utils.ReqResModelsAndServices.Request.MessageRequestModel;

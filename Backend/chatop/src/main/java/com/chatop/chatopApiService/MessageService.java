@@ -1,8 +1,8 @@
 package com.chatop.chatopApiService;
 
+import com.chatop.Interface.ChatopApiServiceInterface.MessageServiceInterface;
 import com.chatop.chatopApiModel.Message;
 import com.chatop.chatopApiRepository.MessageRepository;
-import com.chatop.utils.Interface.ChatopApiServiceInterface.MessageServiceInterface;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

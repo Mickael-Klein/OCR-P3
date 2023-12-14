@@ -1,6 +1,6 @@
 package com.chatop.utils.Common;
 
-import com.chatop.utils.Interface.CommonInterface.PictureHandlerServiceInterface;
+import com.chatop.Interface.CommonInterface.PictureHandlerServiceInterface;
 import com.chatop.utils.ReqResModelsAndServices.Response.RentalResponseService;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;

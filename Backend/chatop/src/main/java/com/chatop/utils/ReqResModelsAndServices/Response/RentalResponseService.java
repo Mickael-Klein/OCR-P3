@@ -1,7 +1,7 @@
 package com.chatop.utils.ReqResModelsAndServices.Response;
 
+import com.chatop.Interface.ResponseInterface.RentalResponseServiceInterface;
 import com.chatop.chatopApiDTO.RentalsDTO;
-import com.chatop.utils.Interface.ResponseInterface.RentalResponseServiceInterface;
 import com.nimbusds.jose.shaded.gson.JsonObject;
 import java.util.HashMap;
 import java.util.List;

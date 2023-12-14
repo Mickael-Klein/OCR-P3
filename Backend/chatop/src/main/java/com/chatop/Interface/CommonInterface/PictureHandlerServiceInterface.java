@@ -1,4 +1,4 @@
-package com.chatop.utils.Interface.CommonInterface;
+package com.chatop.Interface.CommonInterface;
 
 import java.io.IOException;
 import java.util.Map;
