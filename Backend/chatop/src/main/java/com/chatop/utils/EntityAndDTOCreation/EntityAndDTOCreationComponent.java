@@ -9,10 +9,10 @@ import com.chatop.chatopApiModel.Rental;
 import com.chatop.utils.EntityAndDTOCreation.Factory.MessageFactory;
 import com.chatop.utils.EntityAndDTOCreation.Factory.RentalFactory;
 import com.chatop.utils.EntityAndDTOCreation.Factory.UserFactory;
-import com.chatop.utils.RequestModel.AddRentalRequestModel;
-import com.chatop.utils.RequestModel.MessageRequestModel;
-import com.chatop.utils.RequestModel.PutRentalRequestModel;
-import com.chatop.utils.RequestModel.RegisterRequestModel;
+import com.chatop.utils.RequestInput.AddRentalRequestInput;
+import com.chatop.utils.RequestInput.MessageRequestInput;
+import com.chatop.utils.RequestInput.PutRentalRequestInput;
+import com.chatop.utils.RequestInput.RegisterRequestInput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -39,7 +39,7 @@ public class EntityAndDTOCreationComponent
    * @return The created Message entity.
    */
   @Override
-  public Message getFactoryMessageEntity(MessageRequestModel messageRequest) {
+  public Message getFactoryMessageEntity(MessageRequestInput messageRequest) {
     return messageFactory.getMessageEntity(messageRequest);
   }
 
@@ -55,7 +55,7 @@ public class EntityAndDTOCreationComponent
   public Rental getFactoryRentalPostEntity(
     Long userId,
     String imageUrl,
-    AddRentalRequestModel postRentalRequest
+    AddRentalRequestInput postRentalRequest
   ) {
     return rentalFactory.getPostRentalEntity(
       userId,
@@ -74,7 +74,7 @@ public class EntityAndDTOCreationComponent
   @Override
   public Rental getFactoryRentalPutEntity(
     Rental currentRental,
-    PutRentalRequestModel putRentalRequest
+    PutRentalRequestInput putRentalRequest
   ) {
     return rentalFactory.getPutRentalEntity(currentRental, putRentalRequest);
   }
@@ -98,7 +98,7 @@ public class EntityAndDTOCreationComponent
    */
   @Override
   public DbUser getFactoryUserRegisterEntity(
-    RegisterRequestModel registerRequestUser
+    RegisterRequestInput registerRequestUser
   ) {
     return userFactory.getPostUserEntity(registerRequestUser);
   }

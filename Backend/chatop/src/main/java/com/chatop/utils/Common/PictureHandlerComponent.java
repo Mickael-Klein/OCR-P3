@@ -27,7 +27,7 @@ public class PictureHandlerComponent
   private String uploadDir;
 
   @Autowired
-  private RentalResponseComponent rentalResponseService;
+  private RentalResponseComponent rentalResponseComponent;
 
   private static final String SUCCESS = "success";
   private static final String URL = "url";
@@ -135,7 +135,7 @@ public class PictureHandlerComponent
           ERROR,
           ResponseEntity
             .badRequest()
-            .body(rentalResponseService.getMissingPictureJsonString())
+            .body(rentalResponseComponent.getMissingPictureJsonString())
         );
         return response;
       }
@@ -146,7 +146,7 @@ public class PictureHandlerComponent
           ERROR,
           ResponseEntity
             .badRequest()
-            .body(rentalResponseService.getNotImageJsonString())
+            .body(rentalResponseComponent.getNotImageJsonString())
         );
         return response;
       }
@@ -166,7 +166,7 @@ public class PictureHandlerComponent
         ERROR,
         ResponseEntity
           .internalServerError()
-          .body(rentalResponseService.getErrorOccurJsonString())
+          .body(rentalResponseComponent.getErrorOccurJsonString())
       );
       throw e;
     }

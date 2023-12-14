@@ -2,7 +2,7 @@ package com.chatop.utils.EntityAndDTOCreation.Factory;
 
 import com.chatop.Interface.UtilEntityAndDTOCreationInterface.FactoryInterface.MessageFactoryInterface;
 import com.chatop.chatopApiModel.Message;
-import com.chatop.utils.RequestModel.MessageRequestModel;
+import com.chatop.utils.RequestInput.MessageRequestInput;
 import java.time.LocalDateTime;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +19,7 @@ public class MessageFactory implements MessageFactoryInterface {
    * @return The created Message entity.
    */
   @Override
-  public Message getMessageEntity(MessageRequestModel messageRequest) {
+  public Message getMessageEntity(MessageRequestInput messageRequest) {
     Message messageEntity = new Message();
     messageEntity.setMessage(messageRequest.getMessage());
     messageEntity.setUser_id(messageRequest.getUser_id());

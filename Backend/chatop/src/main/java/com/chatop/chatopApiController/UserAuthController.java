@@ -5,8 +5,8 @@ import com.chatop.chatopApiModel.DbUser;
 import com.chatop.chatopApiService.JWTService;
 import com.chatop.chatopApiService.UserService;
 import com.chatop.utils.EntityAndDTOCreation.EntityAndDTOCreationComponent;
-import com.chatop.utils.RequestModel.LoginRequestModel;
-import com.chatop.utils.RequestModel.RegisterRequestModel;
+import com.chatop.utils.RequestInput.LoginRequestInput;
+import com.chatop.utils.RequestInput.RegisterRequestInput;
 import com.chatop.utils.ResponseComponent.UserResponseComponent;
 import com.chatop.utils.SwaggerApiResponse.SwaggerApiJWTTokenResponseModel;
 import com.chatop.utils.SwaggerApiResponse.SwaggerApiMessageResponseModel;
@@ -103,7 +103,7 @@ public class UserAuthController {
   )
   @PostMapping("/register")
   public ResponseEntity<Object> registerAccount(
-    @Valid @RequestBody RegisterRequestModel registerRequestUser,
+    @Valid @RequestBody RegisterRequestInput registerRequestUser,
     BindingResult bindingResult
   ) {
     try {
@@ -184,7 +184,7 @@ public class UserAuthController {
   )
   @PostMapping("/login")
   public ResponseEntity<Object> login(
-    @Valid @RequestBody LoginRequestModel request,
+    @Valid @RequestBody LoginRequestInput request,
     BindingResult bindingResult
   ) {
     try {

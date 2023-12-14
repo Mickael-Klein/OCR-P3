@@ -4,8 +4,8 @@ import com.chatop.Interface.UtilEntityAndDTOCreationInterface.FactoryInterface.R
 import com.chatop.chatopApiDTO.RentalsDTO;
 import com.chatop.chatopApiModel.Rental;
 import com.chatop.utils.Common.UrlGeneratorComponent;
-import com.chatop.utils.RequestModel.AddRentalRequestModel;
-import com.chatop.utils.RequestModel.PutRentalRequestModel;
+import com.chatop.utils.RequestInput.AddRentalRequestInput;
+import com.chatop.utils.RequestInput.PutRentalRequestInput;
 import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 public class RentalFactory implements RentalFactoryInterface {
 
   @Autowired
-  private UrlGeneratorComponent urlGeneratorService;
+  private UrlGeneratorComponent urlGeneratorComponent;
 
   /**
    * Creates a Rental entity for posting based on the provided information.
@@ -31,7 +31,7 @@ public class RentalFactory implements RentalFactoryInterface {
   public Rental getPostRentalEntity(
     Long userId,
     String imageUrl,
-    AddRentalRequestModel postRentalRequest
+    AddRentalRequestInput postRentalRequest
   ) {
     Rental rentalToSave = new Rental();
     rentalToSave.setName(postRentalRequest.getName());
@@ -56,7 +56,7 @@ public class RentalFactory implements RentalFactoryInterface {
   @Override
   public Rental getPutRentalEntity(
     Rental currentRental,
-    PutRentalRequestModel putRentalRequest
+    PutRentalRequestInput putRentalRequest
   ) {
     currentRental.setName(putRentalRequest.getName());
     currentRental.setSurface(putRentalRequest.getSurface());
@@ -81,7 +81,7 @@ public class RentalFactory implements RentalFactoryInterface {
     rentalsDTO.setSurface(rental.getSurface());
     rentalsDTO.setPrice(rental.getPrice());
     rentalsDTO.setPicture(
-      urlGeneratorService.getFinalClientUrl(rental.getPicture())
+      urlGeneratorComponent.getFinalClientUrl(rental.getPicture())
     );
     rentalsDTO.setDescription(rental.getDescription());
     rentalsDTO.setOwner_id(rental.getOwnerId());

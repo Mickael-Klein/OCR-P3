@@ -6,7 +6,7 @@ import com.chatop.chatopApiService.JWTService;
 import com.chatop.chatopApiService.MessageService;
 import com.chatop.chatopApiService.RentalService;
 import com.chatop.utils.EntityAndDTOCreation.EntityAndDTOCreationComponent;
-import com.chatop.utils.RequestModel.MessageRequestModel;
+import com.chatop.utils.RequestInput.MessageRequestInput;
 import com.chatop.utils.ResponseComponent.MessageResponseComponent;
 import com.chatop.utils.SwaggerApiResponse.SwaggerApiMessageResponseModel;
 import io.swagger.v3.oas.annotations.Operation;
@@ -109,7 +109,7 @@ public class MessageController {
   @PostMapping("/api/messages")
   public ResponseEntity<Object> sendMessage(
     @AuthenticationPrincipal Jwt jwt,
-    @Valid @RequestBody MessageRequestModel request,
+    @Valid @RequestBody MessageRequestInput request,
     BindingResult bindingResult
   ) {
     try {

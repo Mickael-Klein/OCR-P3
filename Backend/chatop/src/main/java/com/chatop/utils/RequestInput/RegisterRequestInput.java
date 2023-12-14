@@ -1,4 +1,4 @@
-package com.chatop.utils.RequestModel;
+package com.chatop.utils.RequestInput;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
@@ -8,7 +8,7 @@ import lombok.Data;
  * Data model for user registration request.
  */
 @Data
-public class RegisterRequestModel {
+public class RegisterRequestInput {
 
   /**
    * The email address for registration.

@@ -2,8 +2,8 @@ package com.chatop.Interface.UtilEntityAndDTOCreationInterface.FactoryInterface;
 
 import com.chatop.chatopApiDTO.RentalsDTO;
 import com.chatop.chatopApiModel.Rental;
-import com.chatop.utils.RequestModel.AddRentalRequestModel;
-import com.chatop.utils.RequestModel.PutRentalRequestModel;
+import com.chatop.utils.RequestInput.AddRentalRequestInput;
+import com.chatop.utils.RequestInput.PutRentalRequestInput;
 
 /**
  * Interface for rental factory operations.
@@ -20,7 +20,7 @@ public interface RentalFactoryInterface {
   Rental getPostRentalEntity(
     Long userId,
     String imageUrl,
-    AddRentalRequestModel postRentalRequest
+    AddRentalRequestInput postRentalRequest
   );
 
   /**
@@ -32,7 +32,7 @@ public interface RentalFactoryInterface {
    */
   Rental getPutRentalEntity(
     Rental currentRental,
-    PutRentalRequestModel putRentalRequest
+    PutRentalRequestInput putRentalRequest
   );
 
   /**

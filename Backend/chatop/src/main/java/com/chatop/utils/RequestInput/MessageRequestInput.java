@@ -1,4 +1,4 @@
-package com.chatop.utils.RequestModel;
+package com.chatop.utils.RequestInput;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
@@ -9,7 +9,7 @@ import lombok.Data;
  * Data model for a message request.
  */
 @Data
-public class MessageRequestModel {
+public class MessageRequestInput {
 
   /**
    * The text message.

@@ -1,4 +1,4 @@
-package com.chatop.utils.RequestModel;
+package com.chatop.utils.RequestInput;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
@@ -11,7 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
  * Data model for adding a rental request.
  */
 @Data
-public class AddRentalRequestModel {
+public class AddRentalRequestInput {
 
   /**
    * The name of the rental.

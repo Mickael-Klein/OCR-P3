@@ -6,8 +6,8 @@ import com.chatop.chatopApiService.JWTService;
 import com.chatop.chatopApiService.RentalService;
 import com.chatop.utils.Common.PictureHandlerComponent;
 import com.chatop.utils.EntityAndDTOCreation.EntityAndDTOCreationComponent;
-import com.chatop.utils.RequestModel.AddRentalRequestModel;
-import com.chatop.utils.RequestModel.PutRentalRequestModel;
+import com.chatop.utils.RequestInput.AddRentalRequestInput;
+import com.chatop.utils.RequestInput.PutRentalRequestInput;
 import com.chatop.utils.ResponseComponent.RentalResponseComponent;
 import com.chatop.utils.SwaggerApiResponse.SwaggerApiMessageResponseModel;
 import com.chatop.utils.SwaggerApiResponse.SwaggerApiRentalListResponseModel;
@@ -270,7 +270,7 @@ public class RentalController {
   @Operation(security = { @SecurityRequirement(name = "bearer-key") })
   @PostMapping("/rentals")
   public ResponseEntity<Object> addRental(
-    @Valid @ModelAttribute AddRentalRequestModel addRentalRequest,
+    @Valid @ModelAttribute AddRentalRequestInput addRentalRequest,
     BindingResult bindingResult,
     @AuthenticationPrincipal Jwt jwt
   ) {
@@ -386,7 +386,7 @@ public class RentalController {
   @PutMapping("/rentals/{id}")
   public ResponseEntity<Object> updateRental(
     @PathVariable final Long id,
-    @ModelAttribute PutRentalRequestModel putRentalRequest,
+    @ModelAttribute PutRentalRequestInput putRentalRequest,
     BindingResult bindingResult,
     @AuthenticationPrincipal Jwt jwt
   ) {

@@ -2,7 +2,7 @@ package com.chatop.Interface.UtilEntityAndDTOCreationInterface.FactoryInterface;
 
 import com.chatop.chatopApiDTO.UserDTO;
 import com.chatop.chatopApiModel.DbUser;
-import com.chatop.utils.RequestModel.RegisterRequestModel;
+import com.chatop.utils.RequestInput.RegisterRequestInput;
 
 /**
  * Interface for user factory operations.
@@ -14,7 +14,7 @@ public interface UserFactoryInterface {
    * @param registerRequestUser The registration request model containing user details.
    * @return The created user entity.
    */
-  DbUser getPostUserEntity(RegisterRequestModel registerRequestUser);
+  DbUser getPostUserEntity(RegisterRequestInput registerRequestUser);
 
   /**
    * Creates a DTO (Data Transfer Object) for a user entity.

@@ -5,10 +5,10 @@ import com.chatop.chatopApiDTO.UserDTO;
 import com.chatop.chatopApiModel.DbUser;
 import com.chatop.chatopApiModel.Message;
 import com.chatop.chatopApiModel.Rental;
-import com.chatop.utils.RequestModel.AddRentalRequestModel;
-import com.chatop.utils.RequestModel.MessageRequestModel;
-import com.chatop.utils.RequestModel.PutRentalRequestModel;
-import com.chatop.utils.RequestModel.RegisterRequestModel;
+import com.chatop.utils.RequestInput.AddRentalRequestInput;
+import com.chatop.utils.RequestInput.MessageRequestInput;
+import com.chatop.utils.RequestInput.PutRentalRequestInput;
+import com.chatop.utils.RequestInput.RegisterRequestInput;
 
 /**
  * Interface for entity and DTO creation component operations.
@@ -20,7 +20,7 @@ public interface EntityAndDTOCreationComponentInterface {
    * @param messageRequest The message request model containing message details.
    * @return The created message entity.
    */
-  Message getFactoryMessageEntity(MessageRequestModel messageRequest);
+  Message getFactoryMessageEntity(MessageRequestInput messageRequest);
 
   /**
    * Creates a new rental entity for a post request.
@@ -33,7 +33,7 @@ public interface EntityAndDTOCreationComponentInterface {
   Rental getFactoryRentalPostEntity(
     Long userId,
     String imageUrl,
-    AddRentalRequestModel postRentalRequest
+    AddRentalRequestInput postRentalRequest
   );
 
   /**
@@ -45,7 +45,7 @@ public interface EntityAndDTOCreationComponentInterface {
    */
   Rental getFactoryRentalPutEntity(
     Rental currentRental,
-    PutRentalRequestModel putRentalRequest
+    PutRentalRequestInput putRentalRequest
   );
 
   /**
@@ -62,7 +62,7 @@ public interface EntityAndDTOCreationComponentInterface {
    * @param registerRequestUser The registration request model containing user details.
    * @return The created user entity.
    */
-  DbUser getFactoryUserRegisterEntity(RegisterRequestModel registerRequestUser);
+  DbUser getFactoryUserRegisterEntity(RegisterRequestInput registerRequestUser);
 
   /**
    * Creates a DTO (Data Transfer Object) for a user entity.
