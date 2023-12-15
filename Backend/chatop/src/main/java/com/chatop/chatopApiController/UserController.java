@@ -1,10 +1,10 @@
 package com.chatop.chatopApiController;
 
+import com.chatop.Interface.ChatopApiServiceInterface.UserServiceInterface;
+import com.chatop.Interface.UtilEntityAndDTOCreationInterface.EntityAndDTOCreationComponentInterface;
+import com.chatop.Interface.UtilResponseInterface.UserResponseComponentInterface;
 import com.chatop.chatopApiDTO.UserDTO;
 import com.chatop.chatopApiModel.DbUser;
-import com.chatop.chatopApiService.UserService;
-import com.chatop.utils.EntityAndDTOCreation.EntityAndDTOCreationComponent;
-import com.chatop.utils.ResponseComponent.UserResponseComponent;
 import com.chatop.utils.SwaggerApiResponse.SwaggerApiMessageResponseModel;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -29,13 +29,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
   @Autowired
-  private UserService userService;
+  private UserServiceInterface userService;
 
   @Autowired
-  private UserResponseComponent userResponseComponent;
+  private UserResponseComponentInterface userResponseComponent;
 
   @Autowired
-  private EntityAndDTOCreationComponent entityAndDTOCreationComponent;
+  private EntityAndDTOCreationComponentInterface entityAndDTOCreationComponent;
 
   /**
    * Retrieves user information based on the provided user ID.

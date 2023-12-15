@@ -1,7 +1,7 @@
 package com.chatop.utils.Common;
 
 import com.chatop.Interface.UtilCommonInterface.PictureHandlerComponentInterface;
-import com.chatop.utils.ResponseComponent.RentalResponseComponent;
+import com.chatop.Interface.UtilResponseInterface.RentalResponseComponentInterface;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -27,7 +27,7 @@ public class PictureHandlerComponent
   private String uploadDir;
 
   @Autowired
-  private RentalResponseComponent rentalResponseComponent;
+  private RentalResponseComponentInterface rentalResponseComponent;
 
   private static final String SUCCESS = "success";
   private static final String URL = "url";

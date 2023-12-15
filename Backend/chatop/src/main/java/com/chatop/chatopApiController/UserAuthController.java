@@ -1,13 +1,13 @@
 package com.chatop.chatopApiController;
 
+import com.chatop.Interface.ChatopApiServiceInterface.UserServiceInterface;
+import com.chatop.Interface.UtilEntityAndDTOCreationInterface.EntityAndDTOCreationComponentInterface;
+import com.chatop.Interface.UtilResponseInterface.UserResponseComponentInterface;
 import com.chatop.chatopApiDTO.UserDTO;
 import com.chatop.chatopApiModel.DbUser;
 import com.chatop.chatopApiService.JWTService;
-import com.chatop.chatopApiService.UserService;
-import com.chatop.utils.EntityAndDTOCreation.EntityAndDTOCreationComponent;
 import com.chatop.utils.RequestInput.LoginRequestInput;
 import com.chatop.utils.RequestInput.RegisterRequestInput;
-import com.chatop.utils.ResponseComponent.UserResponseComponent;
 import com.chatop.utils.SwaggerApiResponse.SwaggerApiJWTTokenResponseModel;
 import com.chatop.utils.SwaggerApiResponse.SwaggerApiMessageResponseModel;
 import io.swagger.v3.oas.annotations.Operation;
@@ -34,16 +34,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserAuthController {
 
   @Autowired
-  private UserService userService;
+  private UserServiceInterface userService;
 
   @Autowired
   private JWTService jwtService;
 
   @Autowired
-  UserResponseComponent userResponseComponent;
+  UserResponseComponentInterface userResponseComponent;
 
   @Autowired
-  EntityAndDTOCreationComponent entityAndDTOCreationComponent;
+  EntityAndDTOCreationComponentInterface entityAndDTOCreationComponent;
 
   /**
    * Constructs a new UserAuthController with the specified JWTService.

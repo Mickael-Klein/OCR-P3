@@ -1,14 +1,14 @@
 package com.chatop.utils.EntityAndDTOCreation;
 
 import com.chatop.Interface.UtilEntityAndDTOCreationInterface.EntityAndDTOCreationComponentInterface;
+import com.chatop.Interface.UtilEntityAndDTOCreationInterface.FactoryInterface.MessageFactoryInterface;
+import com.chatop.Interface.UtilEntityAndDTOCreationInterface.FactoryInterface.RentalFactoryInterface;
+import com.chatop.Interface.UtilEntityAndDTOCreationInterface.FactoryInterface.UserFactoryInterface;
 import com.chatop.chatopApiDTO.RentalsDTO;
 import com.chatop.chatopApiDTO.UserDTO;
 import com.chatop.chatopApiModel.DbUser;
 import com.chatop.chatopApiModel.Message;
 import com.chatop.chatopApiModel.Rental;
-import com.chatop.utils.EntityAndDTOCreation.Factory.MessageFactory;
-import com.chatop.utils.EntityAndDTOCreation.Factory.RentalFactory;
-import com.chatop.utils.EntityAndDTOCreation.Factory.UserFactory;
 import com.chatop.utils.RequestInput.AddRentalRequestInput;
 import com.chatop.utils.RequestInput.MessageRequestInput;
 import com.chatop.utils.RequestInput.PutRentalRequestInput;
@@ -24,13 +24,13 @@ public class EntityAndDTOCreationComponent
   implements EntityAndDTOCreationComponentInterface {
 
   @Autowired
-  MessageFactory messageFactory;
+  MessageFactoryInterface messageFactory;
 
   @Autowired
-  RentalFactory rentalFactory;
+  RentalFactoryInterface rentalFactory;
 
   @Autowired
-  UserFactory userFactory;
+  UserFactoryInterface userFactory;
 
   /**
    * Creates a Message entity using the MessageFactory based on the provided information.
