@@ -1,6 +1,7 @@
 package com.chatop.utils.Common;
 
 import com.chatop.Interface.UtilCommonInterface.UrlGeneratorComponentInterface;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
@@ -9,7 +10,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class UrlGeneratorComponent implements UrlGeneratorComponentInterface {
 
-  private static final String BASE_URL = "http://localhost:3001";
+  @Value("${server.port}")
+  private String serverPort;
 
   /**
    * Generates the final client URL by combining the base URL and the provided address.
@@ -19,7 +21,12 @@ public class UrlGeneratorComponent implements UrlGeneratorComponentInterface {
    */
   @Override
   public String getFinalClientUrl(String address) {
-    String finalUrl = BASE_URL + address;
+    // Build the base URL using the injected server port
+    String baseUrl = "http://localhost:" + serverPort;
+
+    // Combine the base URL and the provided address
+    String finalUrl = baseUrl + address;
+
     return finalUrl;
   }
 }
