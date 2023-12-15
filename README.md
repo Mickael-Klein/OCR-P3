@@ -290,7 +290,7 @@ For security reasons, all routes (endpoints) require a valid JWT (Bearer Token) 
   - Description: Modify an existing rental.
   - Authorization Header: Bearer Token required.
 
-## Additional Information
+## Additional Informations
 
 - The `webp-imageio (version: 0.1.6)` dependency enables the handling of WebP image files.
 - The `script.sql` will be launched automatically at each server start, ensuring the required tables exist in the database.
