@@ -148,10 +148,10 @@
               ]
             },
             "url": {
-              "raw": "localhost:3001/api/rentals/1",
+              "raw": "localhost:3001/api/rentals",
               "host": ["localhost"],
               "port": "3001",
-              "path": ["api", "rentals", "1"]
+              "path": ["api", "rentals"]
             }
           },
           "response": []
