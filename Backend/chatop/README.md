@@ -200,6 +200,8 @@ The project adheres to a conventional layered architecture (Controller/Service/J
 
 Authentication is managed by Spring Security with `Oauth2 Resource Server` and JWT. All routes require authentication, except those related to account creation or login. Passwords are encoded with `Bcrypt` and securely stored in the database.
 
+## Management of Images
+
 When creating a rental, an image is mandatory. This image is submitted to the API, stored on the server in the `/src/main/resources/static/rentalPictures` folder, and the image URL is persisted in the database. When a client retrieves a rental or a list of rentals, the `UrlGeneratorComponent` in the `utils/Common` folder dynamically generates the final client URL to access the image.
 
 ## API Documentation
