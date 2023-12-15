@@ -5,9 +5,9 @@ import com.chatop.chatopApiModel.Rental;
 import com.chatop.chatopApiService.JWTService;
 import com.chatop.chatopApiService.MessageService;
 import com.chatop.chatopApiService.RentalService;
-import com.chatop.utils.EntityAndDTOCreation.EntityAndDTOCreationService;
-import com.chatop.utils.ReqResModelsAndServices.Request.MessageRequestModel;
-import com.chatop.utils.ReqResModelsAndServices.Response.MessageResponseService;
+import com.chatop.utils.EntityAndDTOCreation.EntityAndDTOCreationComponent;
+import com.chatop.utils.RequestInput.MessageRequestInput;
+import com.chatop.utils.ResponseComponent.MessageResponseComponent;
 import com.chatop.utils.SwaggerApiResponse.SwaggerApiMessageResponseModel;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -40,10 +40,10 @@ public class MessageController {
   private RentalService rentalService;
 
   @Autowired
-  private MessageResponseService messageResponseService;
+  private MessageResponseComponent messageResponseComponent;
 
   @Autowired
-  private EntityAndDTOCreationService entityAndDTOCreationService;
+  private EntityAndDTOCreationComponent entityAndDTOCreationComponent;
 
   /**
    * Handles the endpoint for sending a message.
@@ -109,7 +109,7 @@ public class MessageController {
   @PostMapping("/api/messages")
   public ResponseEntity<Object> sendMessage(
     @AuthenticationPrincipal Jwt jwt,
-    @Valid @RequestBody MessageRequestModel request,
+    @Valid @RequestBody MessageRequestInput request,
     BindingResult bindingResult
   ) {
     try {
@@ -118,7 +118,7 @@ public class MessageController {
       if (isRequestPayloadInvalid) {
         return ResponseEntity
           .badRequest()
-          .body(messageResponseService.getInvalidMessageRequestJsonString());
+          .body(messageResponseComponent.getInvalidMessageRequestJsonString());
       }
       // Extract user ID from the JWT token
       Long userIdFromJwtToken = jwtService.getUserIdFromJwtLong(jwt);
@@ -128,7 +128,7 @@ public class MessageController {
       ) {
         return ResponseEntity
           .status(HttpStatus.UNAUTHORIZED)
-          .body(messageResponseService.getTokenMismatchingJsonString());
+          .body(messageResponseComponent.getTokenMismatchingJsonString());
       }
       // Retrieve the targeted rental based on the provided rental ID
       Optional<Rental> optionalRentalTargeted = rentalService.getRentalById(
@@ -137,22 +137,24 @@ public class MessageController {
       if (!optionalRentalTargeted.isPresent()) {
         return ResponseEntity
           .badRequest()
-          .body(messageResponseService.getInvalidRentalIdJsonString());
+          .body(messageResponseComponent.getInvalidRentalIdJsonString());
       }
       // Create a Message entity from the request and save it
-      Message messageToSave = entityAndDTOCreationService.getFactoryMessageEntity(
+      Message messageToSave = entityAndDTOCreationComponent.getFactoryMessageEntity(
         request
       );
       messageService.saveMessage(messageToSave);
       // Return success response
       return ResponseEntity
         .ok()
-        .body(messageResponseService.getMessageSentWithSuccessJsonString());
+        .body(messageResponseComponent.getMessageSentWithSuccessJsonString());
     } catch (Exception e) {
       // Handle exceptions and return an internal server error response
       return ResponseEntity
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .body(messageResponseService.getIntenalServerErrorMessageJsonString());
+        .body(
+          messageResponseComponent.getIntenalServerErrorMessageJsonString()
+        );
     }
   }
 }

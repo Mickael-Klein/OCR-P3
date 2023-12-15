@@ -3,8 +3,8 @@ package com.chatop.chatopApiController;
 import com.chatop.chatopApiDTO.UserDTO;
 import com.chatop.chatopApiModel.DbUser;
 import com.chatop.chatopApiService.UserService;
-import com.chatop.utils.EntityAndDTOCreation.EntityAndDTOCreationService;
-import com.chatop.utils.ReqResModelsAndServices.Response.UserResponseService;
+import com.chatop.utils.EntityAndDTOCreation.EntityAndDTOCreationComponent;
+import com.chatop.utils.ResponseComponent.UserResponseComponent;
 import com.chatop.utils.SwaggerApiResponse.SwaggerApiMessageResponseModel;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -32,10 +32,10 @@ public class UserController {
   private UserService userService;
 
   @Autowired
-  private UserResponseService userResponseService;
+  private UserResponseComponent userResponseComponent;
 
   @Autowired
-  private EntityAndDTOCreationService entityAndDTOCreationService;
+  private EntityAndDTOCreationComponent entityAndDTOCreationComponent;
 
   /**
    * Retrieves user information based on the provided user ID.
@@ -102,17 +102,17 @@ public class UserController {
       if (!optionalUser.isPresent()) {
         return ResponseEntity
           .badRequest()
-          .body(userResponseService.getUserInvalidIdParameterJsonString());
+          .body(userResponseComponent.getUserInvalidIdParameterJsonString());
       }
       DbUser user = optionalUser.get();
 
-      UserDTO userDTO = entityAndDTOCreationService.getFactoryUserDTO(user);
+      UserDTO userDTO = entityAndDTOCreationComponent.getFactoryUserDTO(user);
 
       return ResponseEntity.ok().body(userDTO);
     } catch (Exception e) {
       return ResponseEntity
         .badRequest()
-        .body(userResponseService.getUserErrorOccurJsonString());
+        .body(userResponseComponent.getUserErrorOccurJsonString());
     }
   }
 }

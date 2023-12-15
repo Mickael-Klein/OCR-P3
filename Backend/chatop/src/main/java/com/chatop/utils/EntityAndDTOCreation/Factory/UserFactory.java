@@ -1,9 +1,16 @@
 package com.chatop.utils.EntityAndDTOCreation.Factory;
 
+<<<<<<< HEAD
 import com.chatop.Interface.EntityAndDTOCreationInterface.FactoryInterface.UserFactoryInterface;
 import com.chatop.chatopApiDTO.UserDTO;
 import com.chatop.chatopApiModel.DbUser;
 import com.chatop.utils.ReqResModelsAndServices.Request.RegisterRequestModel;
+=======
+import com.chatop.Interface.UtilEntityAndDTOCreationInterface.FactoryInterface.UserFactoryInterface;
+import com.chatop.chatopApiDTO.UserDTO;
+import com.chatop.chatopApiModel.DbUser;
+import com.chatop.utils.RequestInput.RegisterRequestInput;
+>>>>>>> dev
 import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -25,7 +32,7 @@ public class UserFactory implements UserFactoryInterface {
    * @return The created User entity.
    */
   @Override
-  public DbUser getPostUserEntity(RegisterRequestModel registerRequestUser) {
+  public DbUser getPostUserEntity(RegisterRequestInput registerRequestUser) {
     LocalDateTime now = LocalDateTime.now();
 
     DbUser user = new DbUser();

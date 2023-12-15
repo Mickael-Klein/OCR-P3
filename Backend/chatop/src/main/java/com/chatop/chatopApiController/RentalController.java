@@ -4,11 +4,11 @@ import com.chatop.chatopApiDTO.RentalsDTO;
 import com.chatop.chatopApiModel.Rental;
 import com.chatop.chatopApiService.JWTService;
 import com.chatop.chatopApiService.RentalService;
-import com.chatop.utils.Common.PictureHandlerService;
-import com.chatop.utils.EntityAndDTOCreation.EntityAndDTOCreationService;
-import com.chatop.utils.ReqResModelsAndServices.Request.AddRentalRequestModel;
-import com.chatop.utils.ReqResModelsAndServices.Request.PutRentalRequestModel;
-import com.chatop.utils.ReqResModelsAndServices.Response.RentalResponseService;
+import com.chatop.utils.Common.PictureHandlerComponent;
+import com.chatop.utils.EntityAndDTOCreation.EntityAndDTOCreationComponent;
+import com.chatop.utils.RequestInput.AddRentalRequestInput;
+import com.chatop.utils.RequestInput.PutRentalRequestInput;
+import com.chatop.utils.ResponseComponent.RentalResponseComponent;
 import com.chatop.utils.SwaggerApiResponse.SwaggerApiMessageResponseModel;
 import com.chatop.utils.SwaggerApiResponse.SwaggerApiRentalListResponseModel;
 import io.swagger.v3.oas.annotations.Operation;
@@ -47,16 +47,16 @@ public class RentalController {
   private RentalService rentalService;
 
   @Autowired
-  private RentalResponseService rentalResponseService;
+  private RentalResponseComponent rentalResponseComponent;
 
   @Autowired
   private JWTService jwtService;
 
   @Autowired
-  private PictureHandlerService pictureHandlerService;
+  private PictureHandlerComponent pictureHandlerComponent;
 
   @Autowired
-  private EntityAndDTOCreationService entityAndDTOCreationService;
+  private EntityAndDTOCreationComponent entityAndDTOCreationComponent;
 
   /**
    * Retrieves all rentals.
@@ -110,7 +110,7 @@ public class RentalController {
       Iterable<Rental> rentals = rentalService.getAllRentals();
       List<RentalsDTO> rentalsListToSend = new ArrayList<>();
       for (Rental rental : rentals) {
-        RentalsDTO rentalsDTO = entityAndDTOCreationService.getFactoryRentalsDTO(
+        RentalsDTO rentalsDTO = entityAndDTOCreationComponent.getFactoryRentalsDTO(
           rental
         );
         rentalsListToSend.add(rentalsDTO);
@@ -118,11 +118,11 @@ public class RentalController {
 
       return ResponseEntity
         .ok()
-        .body(rentalResponseService.getAllRentalsMap(rentalsListToSend));
+        .body(rentalResponseComponent.getAllRentalsMap(rentalsListToSend));
     } catch (Exception e) {
       return ResponseEntity
         .internalServerError()
-        .body(rentalResponseService.getErrorOccurJsonString());
+        .body(rentalResponseComponent.getErrorOccurJsonString());
     }
   }
 
@@ -191,11 +191,11 @@ public class RentalController {
         return ResponseEntity
           .badRequest()
           .body(
-            rentalResponseService.getIncorrectRentalIdParameterJsonString()
+            rentalResponseComponent.getIncorrectRentalIdParameterJsonString()
           );
       }
       Rental rental = optionalRental.get();
-      RentalsDTO rentalDTO = entityAndDTOCreationService.getFactoryRentalsDTO(
+      RentalsDTO rentalDTO = entityAndDTOCreationComponent.getFactoryRentalsDTO(
         rental
       );
 
@@ -203,7 +203,7 @@ public class RentalController {
     } catch (Exception e) {
       return ResponseEntity
         .internalServerError()
-        .body(rentalResponseService.getErrorOccurJsonString());
+        .body(rentalResponseComponent.getErrorOccurJsonString());
     }
   }
 
@@ -270,7 +270,7 @@ public class RentalController {
   @Operation(security = { @SecurityRequirement(name = "bearer-key") })
   @PostMapping("/rentals")
   public ResponseEntity<Object> addRental(
-    @Valid @ModelAttribute AddRentalRequestModel addRentalRequest,
+    @Valid @ModelAttribute AddRentalRequestInput addRentalRequest,
     BindingResult bindingResult,
     @AuthenticationPrincipal Jwt jwt
   ) {
@@ -281,29 +281,29 @@ public class RentalController {
       if (isRequestPayloadInvalid) {
         return ResponseEntity
           .badRequest()
-          .body(rentalResponseService.getIncorrectRentalDataJsonString());
+          .body(rentalResponseComponent.getIncorrectRentalDataJsonString());
       }
 
-      Map<String, Object> pictureHandlerServiceResponse = pictureHandlerService.savePictureInServerAndReturnServerAddressOrError(
+      Map<String, Object> pictureHandlerComponentResponse = pictureHandlerComponent.savePictureInServerAndReturnServerAddressOrError(
         addRentalRequest.getPicture()
       );
-      Boolean isPictureHandlingSuccess = (Boolean) pictureHandlerServiceResponse.get(
-        pictureHandlerService.getSuccessConstant()
+      Boolean isPictureHandlingSuccess = (Boolean) pictureHandlerComponentResponse.get(
+        pictureHandlerComponent.getSuccessConstant()
       );
       if (!isPictureHandlingSuccess) {
         // Suppressing the warning because the service ensures that "error" is of type ResponseEntity
         @SuppressWarnings("unchecked")
-        ResponseEntity<Object> errorResponse = (ResponseEntity<Object>) pictureHandlerServiceResponse.get(
-          pictureHandlerService.getErrorConstant()
+        ResponseEntity<Object> errorResponse = (ResponseEntity<Object>) pictureHandlerComponentResponse.get(
+          pictureHandlerComponent.getErrorConstant()
         );
         return errorResponse;
       }
 
-      String imageUrl = (String) pictureHandlerServiceResponse.get(
-        pictureHandlerService.getUrlConstant()
+      String imageUrl = (String) pictureHandlerComponentResponse.get(
+        pictureHandlerComponent.getUrlConstant()
       );
 
-      Rental rentalToSave = entityAndDTOCreationService.getFactoryRentalPostEntity(
+      Rental rentalToSave = entityAndDTOCreationComponent.getFactoryRentalPostEntity(
         userId,
         imageUrl,
         addRentalRequest
@@ -312,11 +312,11 @@ public class RentalController {
       rentalService.saveRental(rentalToSave);
       return ResponseEntity
         .ok()
-        .body(rentalResponseService.getRentalCreatedJsonString());
+        .body(rentalResponseComponent.getRentalCreatedJsonString());
     } catch (Exception e) {
       return ResponseEntity
         .badRequest()
-        .body(rentalResponseService.getErrorCreatingRentalJsonString());
+        .body(rentalResponseComponent.getErrorCreatingRentalJsonString());
     }
   }
 
@@ -386,7 +386,7 @@ public class RentalController {
   @PutMapping("/rentals/{id}")
   public ResponseEntity<Object> updateRental(
     @PathVariable final Long id,
-    @ModelAttribute PutRentalRequestModel putRentalRequest,
+    @ModelAttribute PutRentalRequestInput putRentalRequest,
     BindingResult bindingResult,
     @AuthenticationPrincipal Jwt jwt
   ) {
@@ -398,7 +398,7 @@ public class RentalController {
         return ResponseEntity
           .badRequest()
           .body(
-            rentalResponseService.getIncorrectDataForRentalUpdateJsonString()
+            rentalResponseComponent.getIncorrectDataForRentalUpdateJsonString()
           );
       }
 
@@ -407,7 +407,7 @@ public class RentalController {
         return ResponseEntity
           .badRequest()
           .body(
-            rentalResponseService.getIncorrectRentalIdParameterJsonString()
+            rentalResponseComponent.getIncorrectRentalIdParameterJsonString()
           );
       }
 
@@ -417,11 +417,11 @@ public class RentalController {
         return ResponseEntity
           .badRequest()
           .body(
-            rentalResponseService.getUserNotAuthorizeForRentalUpdateJsonString()
+            rentalResponseComponent.getUserNotAuthorizeForRentalUpdateJsonString()
           );
       }
 
-      Rental updatedRental = entityAndDTOCreationService.getFactoryRentalPutEntity(
+      Rental updatedRental = entityAndDTOCreationComponent.getFactoryRentalPutEntity(
         rental,
         putRentalRequest
       );
@@ -430,11 +430,11 @@ public class RentalController {
 
       return ResponseEntity
         .ok()
-        .body(rentalResponseService.getRentalUpdatedJsonString());
+        .body(rentalResponseComponent.getRentalUpdatedJsonString());
     } catch (Exception e) {
       return ResponseEntity
         .badRequest()
-        .body(rentalResponseService.getErrorOnUpdateJsonString());
+        .body(rentalResponseComponent.getErrorOnUpdateJsonString());
     }
   }
 }
