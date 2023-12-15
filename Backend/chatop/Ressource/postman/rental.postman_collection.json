@@ -215,7 +215,7 @@
               }
             },
             "url": {
-              "raw": "localhost:3001/api/messages/",
+              "raw": "localhost:3001/api/messages",
               "host": ["localhost"],
               "port": "3001",
               "path": ["api", "messages", ""]
