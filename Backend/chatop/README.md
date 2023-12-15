@@ -6,7 +6,7 @@ This repository contains a Spring Boot API for the ChâTop project, implementing
 
 - [ChâTop Spring Boot API Project](#châtop-spring-boot-api-project)
   - [Contents](#table-of-contents)
-  - [Prerequisite Requirements](#prerequisites-requirements)
+  - [Prerequisite Requirements](#prerequisite-requirements)
   - [Configuration Settings](#configuration-settings)
   - [Installation Guide](#installation-guide)
   - [Project Architecture](#project-architecture)
@@ -114,7 +114,7 @@ The `jwtKey` must contain your JWT encryption key, which will be used for authen
 
 4. Access the Swagger-ui to explore and test the API, the url to access it is : `http://localhost:3001/swagger-ui.html` if you run the application locally and did not change the running server port.
 
-5. You can also use Postman to test API calls, Postman collection can be found in the `/Backend/Resources/postman` folder.
+5. You can also use Postman to test API calls, Postman collection can be found in the `/Backend/Resources/postman` folder. (you will need to remove bearer token from authorisation header for login and register endpoints, and copy a correct jwt send back by the server after authentication for all the other endpoints)
 
 6. You can clone the Front-End Angular application [here](https://github.com/OpenClassrooms-Student-Center/Developpez-le-back-end-en-utilisant-Java-et-Spring), follow its installation and running process, and then make it work with your API.
 
@@ -290,7 +290,7 @@ For security reasons, all routes (endpoints) require a valid JWT (Bearer Token) 
   - Description: Modify an existing rental.
   - Authorization Header: Bearer Token required.
 
-## Additional Information
+## Additional Informations
 
 - The `webp-imageio (version: 0.1.6)` dependency enables the handling of WebP image files.
 - The `script.sql` will be launched automatically at each server start, ensuring the required tables exist in the database.
