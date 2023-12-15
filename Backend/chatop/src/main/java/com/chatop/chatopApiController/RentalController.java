@@ -1,14 +1,14 @@
 package com.chatop.chatopApiController;
 
+import com.chatop.Interface.ChatopApiServiceInterface.RentalServiceInterface;
+import com.chatop.Interface.UtilCommonInterface.PictureHandlerComponentInterface;
+import com.chatop.Interface.UtilEntityAndDTOCreationInterface.EntityAndDTOCreationComponentInterface;
+import com.chatop.Interface.UtilResponseInterface.RentalResponseComponentInterface;
 import com.chatop.chatopApiDTO.RentalsDTO;
 import com.chatop.chatopApiModel.Rental;
 import com.chatop.chatopApiService.JWTService;
-import com.chatop.chatopApiService.RentalService;
-import com.chatop.utils.Common.PictureHandlerComponent;
-import com.chatop.utils.EntityAndDTOCreation.EntityAndDTOCreationComponent;
 import com.chatop.utils.RequestInput.AddRentalRequestInput;
 import com.chatop.utils.RequestInput.PutRentalRequestInput;
-import com.chatop.utils.ResponseComponent.RentalResponseComponent;
 import com.chatop.utils.SwaggerApiResponse.SwaggerApiMessageResponseModel;
 import com.chatop.utils.SwaggerApiResponse.SwaggerApiRentalListResponseModel;
 import io.swagger.v3.oas.annotations.Operation;
@@ -44,19 +44,19 @@ import org.springframework.web.bind.annotation.RestController;
 public class RentalController {
 
   @Autowired
-  private RentalService rentalService;
+  private RentalServiceInterface rentalService;
 
   @Autowired
-  private RentalResponseComponent rentalResponseComponent;
+  private RentalResponseComponentInterface rentalResponseComponent;
 
   @Autowired
   private JWTService jwtService;
 
   @Autowired
-  private PictureHandlerComponent pictureHandlerComponent;
+  private PictureHandlerComponentInterface pictureHandlerComponent;
 
   @Autowired
-  private EntityAndDTOCreationComponent entityAndDTOCreationComponent;
+  private EntityAndDTOCreationComponentInterface entityAndDTOCreationComponent;
 
   /**
    * Retrieves all rentals.
@@ -386,7 +386,7 @@ public class RentalController {
   @PutMapping("/rentals/{id}")
   public ResponseEntity<Object> updateRental(
     @PathVariable final Long id,
-    @ModelAttribute PutRentalRequestInput putRentalRequest,
+    @Valid @ModelAttribute PutRentalRequestInput putRentalRequest,
     BindingResult bindingResult,
     @AuthenticationPrincipal Jwt jwt
   ) {

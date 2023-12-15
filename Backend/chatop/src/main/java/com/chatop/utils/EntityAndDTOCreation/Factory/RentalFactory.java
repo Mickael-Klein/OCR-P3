@@ -1,9 +1,9 @@
 package com.chatop.utils.EntityAndDTOCreation.Factory;
 
+import com.chatop.Interface.UtilCommonInterface.UrlGeneratorComponentInterface;
 import com.chatop.Interface.UtilEntityAndDTOCreationInterface.FactoryInterface.RentalFactoryInterface;
 import com.chatop.chatopApiDTO.RentalsDTO;
 import com.chatop.chatopApiModel.Rental;
-import com.chatop.utils.Common.UrlGeneratorComponent;
 import com.chatop.utils.RequestInput.AddRentalRequestInput;
 import com.chatop.utils.RequestInput.PutRentalRequestInput;
 import java.time.LocalDateTime;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 public class RentalFactory implements RentalFactoryInterface {
 
   @Autowired
-  private UrlGeneratorComponent urlGeneratorComponent;
+  private UrlGeneratorComponentInterface urlGeneratorComponent;
 
   /**
    * Creates a Rental entity for posting based on the provided information.

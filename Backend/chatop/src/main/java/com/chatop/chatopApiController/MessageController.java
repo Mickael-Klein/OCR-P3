@@ -1,13 +1,13 @@
 package com.chatop.chatopApiController;
 
+import com.chatop.Interface.ChatopApiServiceInterface.MessageServiceInterface;
+import com.chatop.Interface.ChatopApiServiceInterface.RentalServiceInterface;
+import com.chatop.Interface.UtilEntityAndDTOCreationInterface.EntityAndDTOCreationComponentInterface;
+import com.chatop.Interface.UtilResponseInterface.MessageResponseComponentInterface;
 import com.chatop.chatopApiModel.Message;
 import com.chatop.chatopApiModel.Rental;
 import com.chatop.chatopApiService.JWTService;
-import com.chatop.chatopApiService.MessageService;
-import com.chatop.chatopApiService.RentalService;
-import com.chatop.utils.EntityAndDTOCreation.EntityAndDTOCreationComponent;
 import com.chatop.utils.RequestInput.MessageRequestInput;
-import com.chatop.utils.ResponseComponent.MessageResponseComponent;
 import com.chatop.utils.SwaggerApiResponse.SwaggerApiMessageResponseModel;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -34,16 +34,16 @@ public class MessageController {
   private JWTService jwtService;
 
   @Autowired
-  private MessageService messageService;
+  private MessageServiceInterface messageService;
 
   @Autowired
-  private RentalService rentalService;
+  private RentalServiceInterface rentalService;
 
   @Autowired
-  private MessageResponseComponent messageResponseComponent;
+  private MessageResponseComponentInterface messageResponseComponent;
 
   @Autowired
-  private EntityAndDTOCreationComponent entityAndDTOCreationComponent;
+  private EntityAndDTOCreationComponentInterface entityAndDTOCreationComponent;
 
   /**
    * Handles the endpoint for sending a message.
