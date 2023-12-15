@@ -6,7 +6,7 @@ This repository contains a Spring Boot API for the ChâTop project, implementing
 
 - [ChâTop Spring Boot API Project](#châtop-spring-boot-api-project)
   - [Contents](#table-of-contents)
-  - [Prerequisite Requirements](#prerequisites-requirements)
+  - [Prerequisite Requirements](#prerequisite-requirements)
   - [Configuration Settings](#configuration-settings)
   - [Installation Guide](#installation-guide)
   - [Project Architecture](#project-architecture)
