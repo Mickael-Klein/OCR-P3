@@ -1,6 +1,6 @@
 package com.chatop.utils.Common;
 
-import com.chatop.Interface.UtilCommonInterface.UrlGeneratorComponentInterface;
+import com.chatop.Interface.UtilCommonInterface.UrlGeneratorInterface;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
  * Component for generating URLs.
  */
 @Component
-public class UrlGeneratorComponent implements UrlGeneratorComponentInterface {
+public class UrlGeneratorImpl implements UrlGeneratorInterface {
 
   @Value("${server.port}")
   private String serverPort;

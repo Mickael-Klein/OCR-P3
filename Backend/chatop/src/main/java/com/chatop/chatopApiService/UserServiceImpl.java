@@ -1,6 +1,6 @@
 package com.chatop.chatopApiService;
 
-import com.chatop.Interface.ChatopApiServiceInterface.UserServiceInterface;
+import com.chatop.Interface.ChatopApiInterface.UserInterface;
 import com.chatop.chatopApiModel.DbUser;
 import com.chatop.chatopApiRepository.UserRepository;
 import java.util.Optional;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
  */
 @Data
 @Service
-public class UserService implements UserServiceInterface {
+public class UserServiceImpl implements UserInterface {
 
   @Autowired
   private UserRepository userRepository;
@@ -29,7 +29,7 @@ public class UserService implements UserServiceInterface {
    * @return True if the email is already used, false otherwise.
    */
   @Override
-  public Boolean isEmailAlreadyUsed(String email) {
+  public boolean isEmailAlreadyUsed(String email) {
     Optional<DbUser> optionalUser = userRepository.findByEmail(email);
     return optionalUser.isPresent();
   }
@@ -63,7 +63,7 @@ public class UserService implements UserServiceInterface {
    * @return An Optional containing the user associated with the provided ID, or empty if not found.
    */
   @Override
-  public Optional<DbUser> getUserById(Long id) {
+  public Optional<DbUser> getUserById(long id) {
     return userRepository.findById(id);
   }
 
@@ -75,7 +75,7 @@ public class UserService implements UserServiceInterface {
    * @return True if the password is valid, false otherwise.
    */
   @Override
-  public Boolean isPasswordValid(String password, DbUser user) {
+  public boolean isPasswordValid(String password, DbUser user) {
     return passwordEncoder.matches(password, user.getPassword());
   }
 }

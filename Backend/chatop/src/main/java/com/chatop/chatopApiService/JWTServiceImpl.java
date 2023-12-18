@@ -1,6 +1,6 @@
 package com.chatop.chatopApiService;
 
-import com.chatop.Interface.ChatopApiServiceInterface.JWTServiceInterface;
+import com.chatop.Interface.ChatopApiInterface.JWTInterface;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
  * Service for handling JSON Web Token (JWT) operations.
  */
 @Service
-public class JWTService implements JWTServiceInterface {
+public class JWTServiceImpl implements JWTInterface {
 
   private JwtEncoder jwtEncoder;
   private JwtDecoder jwtDecoder;
@@ -27,7 +27,7 @@ public class JWTService implements JWTServiceInterface {
    * @param jwtEncoder The JwtEncoder used for token generation.
    * @param jwtDecoder The JwtDecoder used for token decoding.
    */
-  public JWTService(JwtEncoder jwtEncoder, JwtDecoder jwtDecoder) {
+  public JWTServiceImpl(JwtEncoder jwtEncoder, JwtDecoder jwtDecoder) {
     this.jwtEncoder = jwtEncoder;
     this.jwtDecoder = jwtDecoder;
   }
@@ -39,7 +39,7 @@ public class JWTService implements JWTServiceInterface {
    * @return The generated JWT token.
    */
   @Override
-  public String generateToken(Long id) {
+  public String generateToken(long id) {
     String idToString = String.valueOf(id);
     Instant now = Instant.now();
     JwtClaimsSet claims = JwtClaimsSet
@@ -74,7 +74,7 @@ public class JWTService implements JWTServiceInterface {
    * @return The user ID.
    */
   @Override
-  public Long getUserIdFromJwtLong(Jwt jwt) {
+  public long getUserIdFromJwtlong(Jwt jwt) {
     return Long.parseLong(jwt.getSubject());
   }
 
@@ -86,10 +86,10 @@ public class JWTService implements JWTServiceInterface {
    * @return True if the user IDs match, false otherwise.
    */
   @Override
-  public Boolean areUserIdMatching(
-    Long userIdFromJwt,
-    Long userIdFromRequestPayload
+  public boolean areUserIdMatching(
+    long userIdFromJwt,
+    long userIdFromRequestPayload
   ) {
-    return userIdFromJwt.equals(userIdFromRequestPayload);
+    return userIdFromJwt == userIdFromRequestPayload;
   }
 }

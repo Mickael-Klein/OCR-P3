@@ -23,12 +23,12 @@ public class MessageRequestInput {
    */
   @NotNull(message = "A user id is required")
   @Schema(example = "0")
-  private Long user_id;
+  private long user_id;
 
   /**
    * The rental ID associated with the message.
    */
   @NotNull(message = "A rental id is required")
   @Schema(example = "0")
-  private Long rental_id;
+  private long rental_id;
 }

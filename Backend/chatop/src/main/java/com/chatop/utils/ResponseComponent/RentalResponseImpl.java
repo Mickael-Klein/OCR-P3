@@ -1,6 +1,6 @@
 package com.chatop.utils.ResponseComponent;
 
-import com.chatop.Interface.UtilResponseInterface.RentalResponseComponentInterface;
+import com.chatop.Interface.UtilResponseInterface.RentalResponseInterface;
 import com.chatop.chatopApiDTO.RentalsDTO;
 import com.nimbusds.jose.shaded.gson.JsonObject;
 import java.util.HashMap;
@@ -12,8 +12,7 @@ import org.springframework.stereotype.Component;
  * Component for handling rental response related operations.
  */
 @Component
-public class RentalResponseComponent
-  implements RentalResponseComponentInterface {
+public class RentalResponseImpl implements RentalResponseInterface {
 
   private static final String MESSAGE_TITLE = "message";
   private static final String RENTALS_TITLE = "rentals";

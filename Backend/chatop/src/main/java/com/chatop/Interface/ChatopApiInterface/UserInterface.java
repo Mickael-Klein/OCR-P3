@@ -1,4 +1,4 @@
-package com.chatop.Interface.ChatopApiServiceInterface;
+package com.chatop.Interface.ChatopApiInterface;
 
 import com.chatop.chatopApiModel.DbUser;
 import java.util.Optional;
@@ -6,14 +6,14 @@ import java.util.Optional;
 /**
  * Interface for user service operations.
  */
-public interface UserServiceInterface {
+public interface UserInterface {
   /**
    * Checks if the given email is already used.
    *
    * @param email The email to check.
    * @return True if the email is already used, otherwise false.
    */
-  Boolean isEmailAlreadyUsed(String email);
+  boolean isEmailAlreadyUsed(String email);
 
   /**
    * Saves a user.
@@ -37,7 +37,7 @@ public interface UserServiceInterface {
    * @param id The ID of the user to retrieve.
    * @return An Optional containing the retrieved user, or empty if not found.
    */
-  Optional<DbUser> getUserById(Long id);
+  Optional<DbUser> getUserById(long id);
 
   /**
    * Checks if the provided password is valid for the given user.
@@ -46,5 +46,5 @@ public interface UserServiceInterface {
    * @param user     The user to validate the password against.
    * @return True if the password is valid, otherwise false.
    */
-  Boolean isPasswordValid(String password, DbUser user);
+  boolean isPasswordValid(String password, DbUser user);
 }

@@ -18,7 +18,7 @@ public class RentalsDTO {
     description = "The unique identifier for the rental property.",
     example = "0"
   )
-  private Long id;
+  private long id;
 
   @Schema(
     description = "The name of the rental property.",
@@ -51,7 +51,7 @@ public class RentalsDTO {
     description = "The unique identifier of the owner of the rental property.",
     example = "0"
   )
-  private Long owner_id;
+  private long owner_id;
 
   @Schema(
     description = "The date when the rental property was created.",

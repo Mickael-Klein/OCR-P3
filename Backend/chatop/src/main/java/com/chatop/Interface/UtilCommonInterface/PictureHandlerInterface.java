@@ -7,7 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 /**
  * Interface for picture handling component operations.
  */
-public interface PictureHandlerComponentInterface {
+public interface PictureHandlerInterface {
   /**
    * Gets the constant representing a successful operation.
    *

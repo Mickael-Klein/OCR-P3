@@ -23,7 +23,7 @@ public class Rental {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Schema(description = "The unique identifier for the rental property.")
-  private Long id;
+  private long id;
 
   @Column(name = "name")
   @Schema(description = "The name of the rental property.")

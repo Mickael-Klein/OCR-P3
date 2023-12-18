@@ -22,7 +22,7 @@ public class DbUser {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Schema(description = "The unique identifier for the user.")
-  private Long id;
+  private long id;
 
   @Column(name = "email")
   @Schema(description = "The email address of the user.")

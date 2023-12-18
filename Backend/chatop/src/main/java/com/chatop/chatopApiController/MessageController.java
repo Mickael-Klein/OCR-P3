@@ -1,12 +1,12 @@
 package com.chatop.chatopApiController;
 
-import com.chatop.Interface.ChatopApiServiceInterface.MessageServiceInterface;
-import com.chatop.Interface.ChatopApiServiceInterface.RentalServiceInterface;
-import com.chatop.Interface.UtilEntityAndDTOCreationInterface.EntityAndDTOCreationComponentInterface;
-import com.chatop.Interface.UtilResponseInterface.MessageResponseComponentInterface;
+import com.chatop.Interface.ChatopApiInterface.MessageInterface;
+import com.chatop.Interface.ChatopApiInterface.RentalInterface;
+import com.chatop.Interface.UtilEntityAndDTOCreationInterface.EntityAndDTOCreationInterface;
+import com.chatop.Interface.UtilResponseInterface.MessageResponseInterface;
 import com.chatop.chatopApiModel.Message;
 import com.chatop.chatopApiModel.Rental;
-import com.chatop.chatopApiService.JWTService;
+import com.chatop.chatopApiService.JWTServiceImpl;
 import com.chatop.utils.RequestInput.MessageRequestInput;
 import com.chatop.utils.SwaggerApiResponse.SwaggerApiMessageResponseModel;
 import io.swagger.v3.oas.annotations.Operation;
@@ -31,19 +31,19 @@ import org.springframework.web.bind.annotation.RestController;
 public class MessageController {
 
   @Autowired
-  private JWTService jwtService;
+  private JWTServiceImpl jwtService;
 
   @Autowired
-  private MessageServiceInterface messageService;
+  private MessageInterface messageService;
 
   @Autowired
-  private RentalServiceInterface rentalService;
+  private RentalInterface rentalService;
 
   @Autowired
-  private MessageResponseComponentInterface messageResponseComponent;
+  private MessageResponseInterface messageResponseComponent;
 
   @Autowired
-  private EntityAndDTOCreationComponentInterface entityAndDTOCreationComponent;
+  private EntityAndDTOCreationInterface entityAndDTOCreationComponent;
 
   /**
    * Handles the endpoint for sending a message.
@@ -114,14 +114,14 @@ public class MessageController {
   ) {
     try {
       // Check for validation errors in the request payload
-      Boolean isRequestPayloadInvalid = bindingResult.hasErrors();
+      boolean isRequestPayloadInvalid = bindingResult.hasErrors();
       if (isRequestPayloadInvalid) {
         return ResponseEntity
           .badRequest()
           .body(messageResponseComponent.getInvalidMessageRequestJsonString());
       }
       // Extract user ID from the JWT token
-      Long userIdFromJwtToken = jwtService.getUserIdFromJwtLong(jwt);
+      long userIdFromJwtToken = jwtService.getUserIdFromJwtlong(jwt);
       // Check if the user ID in the JWT token matches the one in the request
       if (
         !jwtService.areUserIdMatching(userIdFromJwtToken, request.getUser_id())

@@ -1,6 +1,6 @@
 package com.chatop.utils.ResponseComponent;
 
-import com.chatop.Interface.UtilResponseInterface.MessageResponseComponentInterface;
+import com.chatop.Interface.UtilResponseInterface.MessageResponseInterface;
 import com.nimbusds.jose.shaded.gson.JsonObject;
 import org.springframework.stereotype.Component;
 
@@ -8,8 +8,7 @@ import org.springframework.stereotype.Component;
  * Component for handling message response related operations.
  */
 @Component
-public class MessageResponseComponent
-  implements MessageResponseComponentInterface {
+public class MessageResponseImpl implements MessageResponseInterface {
 
   private static final String MESSAGE_TITLE = "message";
   private static final String INVALID_MESSAGE_REQUEST =

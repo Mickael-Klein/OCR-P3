@@ -1,6 +1,6 @@
 package com.chatop.chatopApiService;
 
-import com.chatop.Interface.ChatopApiServiceInterface.MessageServiceInterface;
+import com.chatop.Interface.ChatopApiInterface.MessageInterface;
 import com.chatop.chatopApiModel.Message;
 import com.chatop.chatopApiRepository.MessageRepository;
 import lombok.Data;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  */
 @Data
 @Service
-public class MessageService implements MessageServiceInterface {
+public class MessageServiceImpl implements MessageInterface {
 
   @Autowired
   private MessageRepository messageRepository;

@@ -1,6 +1,6 @@
 package com.chatop.utils.ResponseComponent;
 
-import com.chatop.Interface.UtilResponseInterface.UserResponseComponentInterface;
+import com.chatop.Interface.UtilResponseInterface.UserResponseInterface;
 import com.nimbusds.jose.shaded.gson.JsonObject;
 import org.springframework.stereotype.Component;
 
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
  * Component for handling user response related operations.
  */
 @Component
-public class UserResponseComponent implements UserResponseComponentInterface {
+public class UserResponseImpl implements UserResponseInterface {
 
   private static final String MESSAGE_TITLE = "message";
   private static final String REGISTERING_BAD_CREDENTIALS =

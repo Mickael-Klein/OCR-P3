@@ -1,18 +1,18 @@
-package com.chatop.Interface.ChatopApiServiceInterface;
+package com.chatop.Interface.ChatopApiInterface;
 
 import org.springframework.security.oauth2.jwt.Jwt;
 
 /**
  * Interface for JWT (JSON Web Token) service operations.
  */
-public interface JWTServiceInterface {
+public interface JWTInterface {
   /**
    * Generates a JWT token for the given user ID.
    *
    * @param id The user ID.
    * @return The generated JWT token.
    */
-  String generateToken(Long id);
+  String generateToken(long id);
 
   /**
    * Decodes the provided JWT token.
@@ -28,7 +28,7 @@ public interface JWTServiceInterface {
    * @param jwt The decoded JWT.
    * @return The user ID extracted from the JWT.
    */
-  Long getUserIdFromJwtLong(Jwt jwt);
+  long getUserIdFromJwtlong(Jwt jwt);
 
   /**
    * Checks if the user IDs from the JWT and the request payload match.
@@ -37,5 +37,5 @@ public interface JWTServiceInterface {
    * @param userIdFromRequestPayload The user ID from the request payload.
    * @return True if the user IDs match, otherwise false.
    */
-  Boolean areUserIdMatching(Long userIdFromJwt, Long userIdFromRequestPayload);
+  boolean areUserIdMatching(long userIdFromJwt, long userIdFromRequestPayload);
 }

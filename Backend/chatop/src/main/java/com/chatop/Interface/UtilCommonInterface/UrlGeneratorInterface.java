@@ -3,7 +3,7 @@ package com.chatop.Interface.UtilCommonInterface;
 /**
  * Interface for URL generation component operations.
  */
-public interface UrlGeneratorComponentInterface {
+public interface UrlGeneratorInterface {
   /**
    * Generates the final client URL based on the provided address.
    *

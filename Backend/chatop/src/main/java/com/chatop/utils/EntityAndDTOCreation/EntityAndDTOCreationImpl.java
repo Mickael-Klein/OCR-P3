@@ -1,6 +1,6 @@
 package com.chatop.utils.EntityAndDTOCreation;
 
-import com.chatop.Interface.UtilEntityAndDTOCreationInterface.EntityAndDTOCreationComponentInterface;
+import com.chatop.Interface.UtilEntityAndDTOCreationInterface.EntityAndDTOCreationInterface;
 import com.chatop.Interface.UtilEntityAndDTOCreationInterface.FactoryInterface.MessageFactoryInterface;
 import com.chatop.Interface.UtilEntityAndDTOCreationInterface.FactoryInterface.RentalFactoryInterface;
 import com.chatop.Interface.UtilEntityAndDTOCreationInterface.FactoryInterface.UserFactoryInterface;
@@ -20,8 +20,7 @@ import org.springframework.stereotype.Component;
  * Component for creating entities and DTOs using various factories.
  */
 @Component
-public class EntityAndDTOCreationComponent
-  implements EntityAndDTOCreationComponentInterface {
+public class EntityAndDTOCreationImpl implements EntityAndDTOCreationInterface {
 
   @Autowired
   MessageFactoryInterface messageFactory;
@@ -53,7 +52,7 @@ public class EntityAndDTOCreationComponent
    */
   @Override
   public Rental getFactoryRentalPostEntity(
-    Long userId,
+    long userId,
     String imageUrl,
     AddRentalRequestInput postRentalRequest
   ) {

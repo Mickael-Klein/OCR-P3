@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
  * Factory component for creating Message entities.
  */
 @Component
-public class MessageFactory implements MessageFactoryInterface {
+public class MessageFactoryImpl implements MessageFactoryInterface {
 
   /**
    * Creates a Message entity based on the provided MessageRequestModel.

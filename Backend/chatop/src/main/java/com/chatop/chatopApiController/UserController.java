@@ -1,8 +1,8 @@
 package com.chatop.chatopApiController;
 
-import com.chatop.Interface.ChatopApiServiceInterface.UserServiceInterface;
-import com.chatop.Interface.UtilEntityAndDTOCreationInterface.EntityAndDTOCreationComponentInterface;
-import com.chatop.Interface.UtilResponseInterface.UserResponseComponentInterface;
+import com.chatop.Interface.ChatopApiInterface.UserInterface;
+import com.chatop.Interface.UtilEntityAndDTOCreationInterface.EntityAndDTOCreationInterface;
+import com.chatop.Interface.UtilResponseInterface.UserResponseInterface;
 import com.chatop.chatopApiDTO.UserDTO;
 import com.chatop.chatopApiModel.DbUser;
 import com.chatop.utils.SwaggerApiResponse.SwaggerApiMessageResponseModel;
@@ -29,13 +29,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
   @Autowired
-  private UserServiceInterface userService;
+  private UserInterface userService;
 
   @Autowired
-  private UserResponseComponentInterface userResponseComponent;
+  private UserResponseInterface userResponseComponent;
 
   @Autowired
-  private EntityAndDTOCreationComponentInterface entityAndDTOCreationComponent;
+  private EntityAndDTOCreationInterface entityAndDTOCreationComponent;
 
   /**
    * Retrieves user information based on the provided user ID.
@@ -96,7 +96,7 @@ public class UserController {
   )
   @Operation(security = { @SecurityRequirement(name = "bearer-key") })
   @GetMapping("/{id}")
-  public ResponseEntity<Object> getUser(@PathVariable final Long id) {
+  public ResponseEntity<Object> getUser(@PathVariable final long id) {
     try {
       Optional<DbUser> optionalUser = userService.getUserById(id);
       if (!optionalUser.isPresent()) {

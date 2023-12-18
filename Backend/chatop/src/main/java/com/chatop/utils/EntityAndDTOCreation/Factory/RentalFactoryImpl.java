@@ -1,6 +1,6 @@
 package com.chatop.utils.EntityAndDTOCreation.Factory;
 
-import com.chatop.Interface.UtilCommonInterface.UrlGeneratorComponentInterface;
+import com.chatop.Interface.UtilCommonInterface.UrlGeneratorInterface;
 import com.chatop.Interface.UtilEntityAndDTOCreationInterface.FactoryInterface.RentalFactoryInterface;
 import com.chatop.chatopApiDTO.RentalsDTO;
 import com.chatop.chatopApiModel.Rental;
@@ -14,10 +14,10 @@ import org.springframework.stereotype.Component;
  * Factory component for creating Rental entities and DTOs.
  */
 @Component
-public class RentalFactory implements RentalFactoryInterface {
+public class RentalFactoryImpl implements RentalFactoryInterface {
 
   @Autowired
-  private UrlGeneratorComponentInterface urlGeneratorComponent;
+  private UrlGeneratorInterface urlGeneratorComponent;
 
   /**
    * Creates a Rental entity for posting based on the provided information.
@@ -29,7 +29,7 @@ public class RentalFactory implements RentalFactoryInterface {
    */
   @Override
   public Rental getPostRentalEntity(
-    Long userId,
+    long userId,
     String imageUrl,
     AddRentalRequestInput postRentalRequest
   ) {

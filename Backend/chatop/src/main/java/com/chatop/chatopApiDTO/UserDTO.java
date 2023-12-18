@@ -14,7 +14,7 @@ import lombok.Data;
 public class UserDTO {
 
   @Schema(description = "The unique identifier for the user.", example = "0")
-  private Long id;
+  private long id;
 
   @Schema(description = "The name of the user.", example = "User Example")
   private String name;

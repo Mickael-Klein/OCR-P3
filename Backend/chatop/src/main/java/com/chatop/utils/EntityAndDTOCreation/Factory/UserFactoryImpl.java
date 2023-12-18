@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
  * Factory component for creating User entities and DTOs.
  */
 @Component
-public class UserFactory implements UserFactoryInterface {
+public class UserFactoryImpl implements UserFactoryInterface {
 
   @Autowired
   private BCryptPasswordEncoder bCryptPasswordEncoder;

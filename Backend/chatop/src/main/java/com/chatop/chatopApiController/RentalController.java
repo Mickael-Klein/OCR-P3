@@ -1,12 +1,12 @@
 package com.chatop.chatopApiController;
 
-import com.chatop.Interface.ChatopApiServiceInterface.RentalServiceInterface;
-import com.chatop.Interface.UtilCommonInterface.PictureHandlerComponentInterface;
-import com.chatop.Interface.UtilEntityAndDTOCreationInterface.EntityAndDTOCreationComponentInterface;
-import com.chatop.Interface.UtilResponseInterface.RentalResponseComponentInterface;
+import com.chatop.Interface.ChatopApiInterface.RentalInterface;
+import com.chatop.Interface.UtilCommonInterface.PictureHandlerInterface;
+import com.chatop.Interface.UtilEntityAndDTOCreationInterface.EntityAndDTOCreationInterface;
+import com.chatop.Interface.UtilResponseInterface.RentalResponseInterface;
 import com.chatop.chatopApiDTO.RentalsDTO;
 import com.chatop.chatopApiModel.Rental;
-import com.chatop.chatopApiService.JWTService;
+import com.chatop.chatopApiService.JWTServiceImpl;
 import com.chatop.utils.RequestInput.AddRentalRequestInput;
 import com.chatop.utils.RequestInput.PutRentalRequestInput;
 import com.chatop.utils.SwaggerApiResponse.SwaggerApiMessageResponseModel;
@@ -44,19 +44,19 @@ import org.springframework.web.bind.annotation.RestController;
 public class RentalController {
 
   @Autowired
-  private RentalServiceInterface rentalService;
+  private RentalInterface rentalService;
 
   @Autowired
-  private RentalResponseComponentInterface rentalResponseComponent;
+  private RentalResponseInterface rentalResponseComponent;
 
   @Autowired
-  private JWTService jwtService;
+  private JWTServiceImpl jwtService;
 
   @Autowired
-  private PictureHandlerComponentInterface pictureHandlerComponent;
+  private PictureHandlerInterface pictureHandlerComponent;
 
   @Autowired
-  private EntityAndDTOCreationComponentInterface entityAndDTOCreationComponent;
+  private EntityAndDTOCreationInterface entityAndDTOCreationComponent;
 
   /**
    * Retrieves all rentals.
@@ -184,7 +184,7 @@ public class RentalController {
   )
   @Operation(security = { @SecurityRequirement(name = "bearer-key") })
   @GetMapping("/rentals/{id}")
-  public ResponseEntity<Object> getRental(@PathVariable("id") final Long id) {
+  public ResponseEntity<Object> getRental(@PathVariable("id") final long id) {
     try {
       Optional<Rental> optionalRental = rentalService.getRentalById(id);
       if (!optionalRental.isPresent()) {
@@ -275,9 +275,9 @@ public class RentalController {
     @AuthenticationPrincipal Jwt jwt
   ) {
     try {
-      Long userId = jwtService.getUserIdFromJwtLong(jwt);
+      long userId = jwtService.getUserIdFromJwtlong(jwt);
 
-      Boolean isRequestPayloadInvalid = bindingResult.hasErrors();
+      boolean isRequestPayloadInvalid = bindingResult.hasErrors();
       if (isRequestPayloadInvalid) {
         return ResponseEntity
           .badRequest()
@@ -287,7 +287,7 @@ public class RentalController {
       Map<String, Object> pictureHandlerComponentResponse = pictureHandlerComponent.savePictureInServerAndReturnServerAddressOrError(
         addRentalRequest.getPicture()
       );
-      Boolean isPictureHandlingSuccess = (Boolean) pictureHandlerComponentResponse.get(
+      boolean isPictureHandlingSuccess = (boolean) pictureHandlerComponentResponse.get(
         pictureHandlerComponent.getSuccessConstant()
       );
       if (!isPictureHandlingSuccess) {
@@ -385,15 +385,15 @@ public class RentalController {
   @Operation(security = { @SecurityRequirement(name = "bearer-key") })
   @PutMapping("/rentals/{id}")
   public ResponseEntity<Object> updateRental(
-    @PathVariable final Long id,
+    @PathVariable final long id,
     @Valid @ModelAttribute PutRentalRequestInput putRentalRequest,
     BindingResult bindingResult,
     @AuthenticationPrincipal Jwt jwt
   ) {
     try {
-      Long userId = jwtService.getUserIdFromJwtLong(jwt);
+      long userId = jwtService.getUserIdFromJwtlong(jwt);
 
-      Boolean isRequestPayloadInvalid = bindingResult.hasErrors();
+      boolean isRequestPayloadInvalid = bindingResult.hasErrors();
       if (isRequestPayloadInvalid) {
         return ResponseEntity
           .badRequest()

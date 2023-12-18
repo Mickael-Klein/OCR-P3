@@ -18,7 +18,7 @@ public interface RentalFactoryInterface {
    * @return The created rental entity.
    */
   Rental getPostRentalEntity(
-    Long userId,
+    long userId,
     String imageUrl,
     AddRentalRequestInput postRentalRequest
   );

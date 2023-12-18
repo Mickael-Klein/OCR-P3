@@ -1,4 +1,4 @@
-package com.chatop.Interface.ChatopApiServiceInterface;
+package com.chatop.Interface.ChatopApiInterface;
 
 import com.chatop.chatopApiModel.Rental;
 import java.util.Optional;
@@ -6,7 +6,7 @@ import java.util.Optional;
 /**
  * Interface for rental service operations.
  */
-public interface RentalServiceInterface {
+public interface RentalInterface {
   /**
    * Retrieves all rentals.
    *
@@ -20,7 +20,7 @@ public interface RentalServiceInterface {
    * @param id The ID of the rental to retrieve.
    * @return An Optional containing the retrieved rental, or empty if not found.
    */
-  Optional<Rental> getRentalById(Long id);
+  Optional<Rental> getRentalById(long id);
 
   /**
    * Saves a rental.

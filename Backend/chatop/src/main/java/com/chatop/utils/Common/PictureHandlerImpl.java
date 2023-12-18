@@ -1,7 +1,7 @@
 package com.chatop.utils.Common;
 
-import com.chatop.Interface.UtilCommonInterface.PictureHandlerComponentInterface;
-import com.chatop.Interface.UtilResponseInterface.RentalResponseComponentInterface;
+import com.chatop.Interface.UtilCommonInterface.PictureHandlerInterface;
+import com.chatop.Interface.UtilResponseInterface.RentalResponseInterface;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -20,14 +20,13 @@ import org.springframework.web.multipart.MultipartFile;
  * Component for handling picture-related operations.
  */
 @Component
-public class PictureHandlerComponent
-  implements PictureHandlerComponentInterface {
+public class PictureHandlerImpl implements PictureHandlerInterface {
 
   @Value("${upload-dir}")
   private String uploadDir;
 
   @Autowired
-  private RentalResponseComponentInterface rentalResponseComponent;
+  private RentalResponseInterface rentalResponseComponent;
 
   private static final String SUCCESS = "success";
   private static final String URL = "url";
@@ -72,8 +71,7 @@ public class PictureHandlerComponent
    */
   @Override
   public String generatePictureName(String pictureName) {
-    String name = System.currentTimeMillis() + "_" + pictureName;
-    return name;
+    return System.currentTimeMillis() + "_" + pictureName;
   }
 
   /**
@@ -84,8 +82,7 @@ public class PictureHandlerComponent
    */
   @Override
   public String generatePictureServerAddress(String pictureName) {
-    String url = RENTAL_PICTURES_DIRECTORY + pictureName;
-    return url;
+    return RENTAL_PICTURES_DIRECTORY + pictureName;
   }
 
   /**
@@ -106,7 +103,7 @@ public class PictureHandlerComponent
    * @param bytes The byte array representing the image.
    * @return True if the bytes represent an image, false otherwise.
    */
-  private Boolean isImage(byte[] bytes) {
+  private boolean isImage(byte[] bytes) {
     try (ByteArrayInputStream bis = new ByteArrayInputStream(bytes)) {
       BufferedImage image = ImageIO.read(bis);
       return image != null;

@@ -1,11 +1,11 @@
 package com.chatop.chatopApiController;
 
-import com.chatop.Interface.ChatopApiServiceInterface.UserServiceInterface;
-import com.chatop.Interface.UtilEntityAndDTOCreationInterface.EntityAndDTOCreationComponentInterface;
-import com.chatop.Interface.UtilResponseInterface.UserResponseComponentInterface;
+import com.chatop.Interface.ChatopApiInterface.UserInterface;
+import com.chatop.Interface.UtilEntityAndDTOCreationInterface.EntityAndDTOCreationInterface;
+import com.chatop.Interface.UtilResponseInterface.UserResponseInterface;
 import com.chatop.chatopApiDTO.UserDTO;
 import com.chatop.chatopApiModel.DbUser;
-import com.chatop.chatopApiService.JWTService;
+import com.chatop.chatopApiService.JWTServiceImpl;
 import com.chatop.utils.RequestInput.LoginRequestInput;
 import com.chatop.utils.RequestInput.RegisterRequestInput;
 import com.chatop.utils.SwaggerApiResponse.SwaggerApiJWTTokenResponseModel;
@@ -34,23 +34,23 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserAuthController {
 
   @Autowired
-  private UserServiceInterface userService;
+  private UserInterface userService;
 
   @Autowired
-  private JWTService jwtService;
+  private JWTServiceImpl jwtService;
 
   @Autowired
-  UserResponseComponentInterface userResponseComponent;
+  UserResponseInterface userResponseComponent;
 
   @Autowired
-  EntityAndDTOCreationComponentInterface entityAndDTOCreationComponent;
+  EntityAndDTOCreationInterface entityAndDTOCreationComponent;
 
   /**
    * Constructs a new UserAuthController with the specified JWTService.
    *
    * @param jwtService The JWTService instance.
    */
-  public UserAuthController(JWTService jwtService) {
+  public UserAuthController(JWTServiceImpl jwtService) {
     this.jwtService = jwtService;
   }
 
@@ -107,14 +107,14 @@ public class UserAuthController {
     BindingResult bindingResult
   ) {
     try {
-      Boolean isRequestPayloadInvalid = bindingResult.hasErrors();
+      boolean isRequestPayloadInvalid = bindingResult.hasErrors();
       if (isRequestPayloadInvalid) {
         return ResponseEntity
           .badRequest()
           .body(userResponseComponent.getRegisteringBadCredentialsJsonString());
       }
 
-      Boolean emailAlreadyRegistered = userService.isEmailAlreadyUsed(
+      boolean emailAlreadyRegistered = userService.isEmailAlreadyUsed(
         registerRequestUser.getEmail()
       );
       if (emailAlreadyRegistered) {
@@ -188,7 +188,7 @@ public class UserAuthController {
     BindingResult bindingResult
   ) {
     try {
-      Boolean isRequestPayloadInvalid = bindingResult.hasErrors();
+      boolean isRequestPayloadInvalid = bindingResult.hasErrors();
       if (isRequestPayloadInvalid) {
         return handleInvalidCredentials();
       }
@@ -202,7 +202,7 @@ public class UserAuthController {
 
       DbUser user = optionalUser.get();
 
-      Boolean isPasswordCorrect = userService.isPasswordValid(
+      boolean isPasswordCorrect = userService.isPasswordValid(
         request.getPassword(),
         user
       );
@@ -282,7 +282,7 @@ public class UserAuthController {
   @GetMapping("/me")
   public ResponseEntity<Object> getMe(@AuthenticationPrincipal Jwt jwt) {
     try {
-      Long userId = jwtService.getUserIdFromJwtLong(jwt);
+      long userId = jwtService.getUserIdFromJwtlong(jwt);
       Optional<DbUser> optionalUser = userService.getUserById(userId);
       if (!optionalUser.isPresent()) {
         return ResponseEntity

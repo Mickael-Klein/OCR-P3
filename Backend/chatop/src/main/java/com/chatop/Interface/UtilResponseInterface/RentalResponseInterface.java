@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * Interface for rental response component operations.
  */
-public interface RentalResponseComponentInterface {
+public interface RentalResponseInterface {
   /**
    * Creates a JSON object representing a message.
    *

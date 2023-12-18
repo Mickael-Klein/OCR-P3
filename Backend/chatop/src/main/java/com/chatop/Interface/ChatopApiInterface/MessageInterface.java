@@ -1,11 +1,11 @@
-package com.chatop.Interface.ChatopApiServiceInterface;
+package com.chatop.Interface.ChatopApiInterface;
 
 import com.chatop.chatopApiModel.Message;
 
 /**
  * Interface for message service operations.
  */
-public interface MessageServiceInterface {
+public interface MessageInterface {
   /**
    * Saves a message.
    *

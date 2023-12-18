@@ -1,6 +1,6 @@
 package com.chatop.chatopApiService;
 
-import com.chatop.Interface.ChatopApiServiceInterface.RentalServiceInterface;
+import com.chatop.Interface.ChatopApiInterface.RentalInterface;
 import com.chatop.chatopApiModel.Rental;
 import com.chatop.chatopApiRepository.RentalRepository;
 import java.util.Optional;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
  */
 @Data
 @Service
-public class RentalService implements RentalServiceInterface {
+public class RentalServiceImpl implements RentalInterface {
 
   @Autowired
   private RentalRepository rentalRepository;
@@ -35,7 +35,7 @@ public class RentalService implements RentalServiceInterface {
    * @return An Optional containing the rental associated with the provided ID, or empty if not found.
    */
   @Override
-  public Optional<Rental> getRentalById(final Long id) {
+  public Optional<Rental> getRentalById(final long id) {
     return rentalRepository.findById(id);
   }
 

@@ -13,7 +13,7 @@ import com.chatop.utils.RequestInput.RegisterRequestInput;
 /**
  * Interface for entity and DTO creation component operations.
  */
-public interface EntityAndDTOCreationComponentInterface {
+public interface EntityAndDTOCreationInterface {
   /**
    * Creates a message entity based on the provided message request model.
    *
@@ -31,7 +31,7 @@ public interface EntityAndDTOCreationComponentInterface {
    * @return The created rental entity.
    */
   Rental getFactoryRentalPostEntity(
-    Long userId,
+    long userId,
     String imageUrl,
     AddRentalRequestInput postRentalRequest
   );

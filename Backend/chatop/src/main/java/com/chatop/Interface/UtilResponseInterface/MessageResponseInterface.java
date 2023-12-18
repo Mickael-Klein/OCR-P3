@@ -5,7 +5,7 @@ import com.nimbusds.jose.shaded.gson.JsonObject;
 /**
  * Interface for message response component operations.
  */
-public interface MessageResponseComponentInterface {
+public interface MessageResponseInterface {
   /**
    * Creates a JSON object representing a message.
    *
